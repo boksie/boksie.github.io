@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> -->
+    </head>
+    <body>
+        <div class="background blue-sky">
+            <div class="background-shade">
+                <div class="header">
+                    <div class="weather">
+                        <span id="currentDate"></span> <span id="weatherDescription"></span> <span id="temperature"></span>
+                    </div>  
+                    <div class="info">
+                        <span class="button spa-link" data-target="WIMH">WIMH</span>
+                    </div>
+                </div>
+
+                <app-landing><div class="page active" id="landing">
+    <div class="container column landing-container">
+        <div class="landing-header">Wat is mijn hardlooptijd?</div>
+        <div class="landing-main">Bereken eenvoudig je hardlooptijden, personaliseer je tempo en wees op en top voorbereid op je volgende wedstrijd of training.</div>
+        <div class="row form-landing">
+            <input tabindex="1" class="input-landing" type="text" id="name" placeholder="Voornaam" data-bind="name">
+            <input tabindex="2" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="age" placeholder="Leeftijd" data-bind="age">
+            <input tabindex="3" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="weight" placeholder="Gewicht" data-bind="weight" data-target="pace">
+            
+            <div tabindex="4" class="button btn-green btn-right spa-link" data-target="pace">
+                <span>Bereken je run</span>
+                <svg class="icon-next" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="50" y1="30" x2="10" y2="70" stroke="currentColor" stroke-width="currentStrokeWidth" stroke-linecap="round" />
+                    <line x1="50" y1="30" x2="90" y2="70" stroke="currentColor" stroke-width="currentStrokeWidth" stroke-linecap="round" />
+                </svg>    
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-buttons">
+        <div class="row right">
+            <div id="facts" class="btn-white body-facts"><img height="20px" style="margin: 10px 0; border-right: solid 1px black; padding-right: 15px; margin-right: 15px;" src="./icons/Body facts.svg"><span id="factsText">Body Fact</span></div>
+        </div>
+    </div>
+</div></app-landing>
+                <app-negative-split><div class="page form" id="negative-split" data-escapable="pace">
+    <div class="form-fullscreen">
+        <div class="button btn-round spa-link right-form" data-target="previous"><img height="20px" src="./icons/Sluiten.svg"></div>
+        <div class="form-fullscreen-body">
+            <div class="form-fullscreen-content">
+                <div class="form-fullscreen-question">Negatieve split</div>
+                <p>Bereken de snelheid van je run om de tweede helft sneller te lopen dan de eerste.</p>
+                <div class="form-row p20">
+                    <div class="form-column">
+                        <div class="range-label-container">
+                            <span class="range-label" id="negative-split-range-label"></span>
+                        </div>
+                        <div class="range-container">
+                            <input tabindex="0" type="range" min="0" max="10" value="0" data-bind="negative-split" id="negative-split-range">
+                        </div>
+                    </div>
+                    <div class="form-column" style="width: 80px; display: flex; flex-direction: row;">
+                        <span data-resolve="negative-split-range" id="negative-split-input" data-bind="negative-split"></span>
+                        <span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-fullscreen-btn">
+                <div tabindex="1" class="button btn-green spa-link" data-target="pace"><span>Ga door</span></div>
+            </div>
+        </div>
+    </div>
+</div></app-negative-split>
+                <app-form><div class="page form" id="name-form" data-escapable="pace">
+    <div class="form-fullscreen">
+        <div class="button btn-round spa-link right-form" data-target="pace"><img height="20px" src="./icons/Sluiten.svg"></div>
+        <div class="form-fullscreen-body">
+            <div class="form-fullscreen-question">Wat is je naam?</div>
+            <p>We vragen dit om je ervaring te personaliseren</p>
+            <div class="form-input-button">
+                <input tabindex="0" type="text" data-bind="name" placeholder="Naam">
+                <svg tabindex="1" class="spa-link" data-target="age-form" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="14" fill="currentColor"/>
+                    <path d="M11.2746 20.7258C11.6396 21.0914 12.228 21.0914 12.5929 20.7258L18.7821 14.526C19.0726 14.235 19.0726 13.765 18.7821 13.474L12.5929 7.27418C12.228 6.90861 11.6396 6.90861 11.2746 7.27418C10.9097 7.63975 10.9097 8.22915 11.2746 8.59472L16.6669 14.0037L11.2672 19.4127C10.9097 19.7709 10.9097 20.3677 11.2746 20.7258Z" fill="white"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page form" id="age-form" data-escapable="pace">
+    <div class="form-fullscreen">
+        <div class="button btn-round spa-link right-form" data-target="pace"><img height="20px" src="./icons/Sluiten.svg"></div>
+        <div class="form-fullscreen-body">
+            <div class="form-fullscreen-question">Wat is je leeftijd?</div>
+            <p>We vragen dit om je ervaring te personaliseren</p>
+            <div class="form-input-button">
+                <input tabindex="0" type="number" onkeydown="allowNumbers(event)" data-bind="age" placeholder="Leeftijd">
+                <svg tabindex="1" class="spa-link" data-target="weight-form" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="14" fill="currentColor"/>
+                    <path d="M11.2746 20.7258C11.6396 21.0914 12.228 21.0914 12.5929 20.7258L18.7821 14.526C19.0726 14.235 19.0726 13.765 18.7821 13.474L12.5929 7.27418C12.228 6.90861 11.6396 6.90861 11.2746 7.27418C10.9097 7.63975 10.9097 8.22915 11.2746 8.59472L16.6669 14.0037L11.2672 19.4127C10.9097 19.7709 10.9097 20.3677 11.2746 20.7258Z" fill="white"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page form" id="weight-form" data-escapable="pace">
+    <div class="form-fullscreen">
+        <div class="button btn-round spa-link right-form" data-target="pace"><img height="20px" src="./icons/Sluiten.svg"></div>
+        <div class="form-fullscreen-body">
+            <div class="form-fullscreen-question">Wat is je gewicht?</div>
+            <p>We vragen dit om je ervaring te personaliseren</p>
+            <div class="form-input-button">
+                <input tabindex="0" type="number" onkeydown="allowNumbers(event)" data-bind="weight" placeholder="Gewicht">
+                <svg tabindex="1" class="spa-link" data-target="pace" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="14" fill="currentColor"/>
+                    <path d="M11.2746 20.7258C11.6396 21.0914 12.228 21.0914 12.5929 20.7258L18.7821 14.526C19.0726 14.235 19.0726 13.765 18.7821 13.474L12.5929 7.27418C12.228 6.90861 11.6396 6.90861 11.2746 7.27418C10.9097 7.63975 10.9097 8.22915 11.2746 8.59472L16.6669 14.0037L11.2672 19.4127C10.9097 19.7709 10.9097 20.3677 11.2746 20.7258Z" fill="white"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div></app-form>
+                <app-pace><div class="page" id="pace">
+    <div class="container">
+        <div class="pace-text-wrapper"> 
+            <div class="right-side-head" data-display="name">Hoi <span data-resolve="name"></span>!</div>
+            <div class="right-side-head" #else>Hoi!</div>
+            <div class="right-side-main">Bereken je tijden aan de hand van een eerder gelopen run of door je gemiddelde tempo per kilometer.</div>
+            <br />
+            <div class="right-side-main">Maak je run persoonlijk en nog uitdagender met een negatieve split.</div>
+        </div>
+
+        <div class="panel-container">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="panel-title">
+                        Mijn tempo
+                    </div>
+                    <div class="panel-form">
+                        <div class="form-row">
+                            <div class="form-column">
+                                <label>afstand</label>
+                                    <div class="range-label-container">
+                                        <span class="range-label" id="kilometer-range-label"></span>
+                                    </div>
+                                    <div class="range-container">
+                                        <input tabindex="0" type="range" step="1" min="0" max="422" value="0" id="kilometer">
+                                    </div>
+                            </div>
+                            <div class="form-column" style="width: 60px;">
+                                <label class="center">KM</label>
+                                <input type="text" value="0" id="kilometer-input" class="input-readonly bg-gray" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-column">
+                                <label>Tijd</label>
+                                <div class="row" id="time-input-fields">
+                                    
+                                    <div class="select-wrapper">
+                                        <select tabindex="1" onchange="onTimeUpdate()" id="hours">
+                                        </select>
+                                    </div>
+                                    <div class="select-wrapper">
+                                        <select tabindex="2" onchange="onTimeUpdate()" id="minutes">
+                                        </select>
+                                    </div>
+                                    <div class="select-wrapper">
+                                        <select tabindex="3" onchange="onTimeUpdate()" id="seconds">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-column">
+                                <label>Gemiddeld tempo</label>
+                                <div class="row">
+                                    <app-pace-input><div class="time-wrapper">
+    <div class="input-pace-time">
+        <!-- <span id="average-pace" role="textbox" contenteditable="false" draggable="false"> -->
+            <span tabindex="4" id="average-pace-min" data-next="average-pace-sec" role="textbox" contenteditable="true" draggable="false">00</span>
+            <span id="average-pace-seperator" role="textbox" contenteditable="false" draggable="false">:</span>
+            <span tabindex="5" id="average-pace-sec" data-next="speed" role="textbox" contenteditable="true" draggable="false">00</span>
+            <span>/km</span>
+        <!-- </span> -->
+
+    </div>
+    <div class="time-buttons-right">
+        <div class="time-buttons">
+            <svg id="pace-button-up" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="30" x2="10" y2="70" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+                <line x1="50" y1="30" x2="90" y2="70" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+            </svg>
+            <svg id="pace-button-down" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="70" x2="10" y2="30" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+                <line x1="50" y1="70" x2="90" y2="30" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+            </svg>
+        </div>
+    </div>
+</div></app-pace-input>
+                                    <app-speed-input><div class="time-wrapper">
+    <div class="input-speed">
+        <span tabindex="6" id="speed" role="textbox" contenteditable>0,0</span><span> km/u</span>
+    </div>
+    <div class="time-buttons-right">
+        <div class="time-buttons">
+            <svg id="speed-button-up" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="30" x2="10" y2="70" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+                <line x1="50" y1="30" x2="90" y2="70" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+            </svg>
+            <svg id="speed-button-down" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <line x1="50" y1="70" x2="10" y2="30" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+                <line x1="50" y1="70" x2="90" y2="30" stroke="currentColor" stroke-width="7px" stroke-linecap="round" />
+            </svg>
+        </div>
+    </div>
+</div></app-speed-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pace-button-wrapper">
+                            <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">Personaliseren<span data-display="name#weight#age"><img src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
+                            <div tabindex="8" class="button btn-white-panel spa-link" data-target="negative-split">Negatieve split<span data-display="negative-split-range"><img src="./icons/Gedaan.svg"></span></span><span #else class="plus-icon"></span></div>
+                        </div>
+
+                        <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span></div>
+                        <div tabindex="10" class="button btn-transparent spa-link" data-target="landing">Terug</div>
+                    </div>
+            </div>
+        </div>
+        </div>
+        <div class="filler"></div>
+    </div>
+</div>
+
+</app-pace>
+                <app-result><div class="page" id="result">
+    <div class="container">
+        <div class="pace-text-wrapper">
+            <div class="right-side-head" data-display="name"><span data-resolve="name"></span>!</div>
+            <div class="right-side-head" #else>Hoi!</div>
+            <div class="right-side-main">Op basis van jouw gemiddelde tempo van <span id="pace-result" data-resolve="average-pace-min:average-pace-sec">&nbsp;</span> <span data-display="negative-split-range">en een negatieve split van <span id="negative-split-result" data-resolve="negative-split-input">0</span>%</span> is je geschatte eindtijd</div>
+            <div class="right-side-main"><u data-resolve="hours:minutes:seconds"></u></div>
+        </div>
+
+        <div class="panel-container">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="panel-title panel-title-result" data-display="name" data-resolve="name"></div>
+                    <div class="panel-title panel-title-result" #else>Mijn tempo</div>
+                    <div class="panel-detail column">
+                        <div class="row space" data-display="age|weight|negative-split-range">
+                            <div class="panel-detail-col">
+                                <div class="panel-detail-value" data-display="age" data-resolve="age">&nbsp;</div>
+                                <div class="panel-detail-value" #else>--</div>
+                                <div class="panel-detail-label">Leeftijd</div>
+                            </div>
+                            <div class="panel-detail-col">
+                                <div class="panel-detail-value" data-display="weight" data-resolve="weight">&nbsp;</div>
+                                <div class="panel-detail-value" #else>--</div>
+                                <div class="panel-detail-label">Gewicht</div>
+                            </div>
+                            <div class="panel-detail-col">
+                                <div class="panel-detail-value" data-display="negative-split-range"><span data-resolve="negative-split-range">&nbsp;</span>%</div>
+                                <div class="panel-detail-value" #else>--</div>
+                                <div class="panel-detail-label">Negatieve split</div>
+                            </div>
+                        </div>
+                        <div class="row space">
+                            <div class="panel-detail-col">
+                                <div class="panel-detail-value" data-resolve="kilometer-input">&nbsp;</div>
+                                <div class="panel-detail-label">Afstand</div>
+                            </div>
+                            <div class="panel-detail-col">
+                                <div class="panel-detail-value" data-resolve="average-pace-min:average-pace-sec">&nbsp;</div>
+                                <div class="panel-detail-label">Tempo</div>
+                            </div>
+                            <div class="panel-detail-col">
+                                <div class="panel-detail-value" data-resolve="hours:minutes:seconds">&nbsp;</div>
+                                <div class="panel-detail-label">Eindtijd</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-table" data-run="createPaceTable" id="panelMain">
+                    </div>
+                </div>
+
+
+                <hr>
+                <div class="result-buttons">
+                    <div class="button btn-round spa-link" data-target="pace"><img height="20px" src="./icons/Instellingen.svg"></div>
+                    <div class="button btn-round spa-link" data-target="landing"><img height="20px" src="./icons/Sluiten.svg"></div>
+                </div>
+            </div>
+        </div>
+        <div class="filler"></div>
+    </div>
+</div></app-result>
+                <app-WIMH><div class="page form" id="WIMH" data-escapable="previous">
+    <div class="form-fullscreen">
+        <div class="WIMH-top">
+            <div class="button btn-round spa-link right" data-target="previous"><img height="20px" src="./icons/Sluiten.svg"></div>
+            <input tabindex="0" class="spa-link" type="hidden">
+        </div>
+        <div class="WIMH-content">
+            <div class="WIMH-header">Wat is mijn hardlooptijd</div>
+            <div class="WIMH-fullscreen-body">
+                <div class="WIMH-sub-header">Is een project van</div>
+                <p>Aron de Boks</p>
+                <p>Micha de Boks</p>
+                <br />
+                
+                <div class="WIMH-sub-header">Met hulp van</div>
+                <p>Koole Sport</p>
+                <p>Powerbar Energygel</p>
+                <p>Kustmarathon Zeeland</p>
+                <br />
+
+                <div class="WIMH-sub-header">En fotografie van</div>
+                <p>Thomas Brouwer</p>
+                
+            </div>
+        </div>
+    </div>
+</div></app-WIMH>
+            </div>
+        </div>
+        <script type="text/javascript" src="main.js"></script>
+    </body>
+</html>
