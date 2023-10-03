@@ -128,7 +128,7 @@
     position: absolute;
 } */
 
-.btn-green:has(.icon-next) {
+.p-right-50 {
     padding-right: 50px;
 }
 
@@ -143,7 +143,9 @@
     stroke-width: 13px;
 }
 
-
+option {
+    font-family: 'Montserrat',Verdana,Geneva,sans-serif;
+}
 
 
 /**** FLEX *****/
@@ -615,21 +617,31 @@ body {
     display: flex;
     background-color: #AA9A6B;
     color: #F7F7F7;
-    padding: 25px 5px;
+    padding: 25px 15px;
     border-radius: 5px;
     box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25);
 }
 
 .panel-detail-col {
     position: relative;
-    /* flex: 1; */
+    width: 33.33%; /* as @passatgt mentioned in the comment, for the older browsers fallback */
+    width: calc(100% / 3);
     text-align: center;
 }
 
 .panel-detail-col > * {
     display: block;
-    margin: 10px 0px;
+    margin: 10px 0px 0px 0px;
 }
+
+.panel-detail-col:nth-child(-n + 2) {
+    text-align: left;
+}
+
+.panel-detail-col:nth-last-child(-n + 1) {
+    text-align: right;
+}
+
 
 .panel-detail-value {
     font-weight: 700;
@@ -707,7 +719,7 @@ body {
     position: relative;
     display: flex;
     background: #FFFFFF;
-    width: 120px;
+    width: 140px;
     color: #000000;
     border-radius: 3px;
     margin-right: 5px;

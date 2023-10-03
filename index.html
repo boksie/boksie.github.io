@@ -2,7 +2,6 @@
 <html>
     <head>
         <link rel="stylesheet" href="styles.css">
-        <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet"> -->
     </head>
     <body>
         <div class="background blue-sky">
@@ -25,7 +24,7 @@
             <input tabindex="2" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="age" placeholder="Leeftijd" data-bind="age">
             <input tabindex="3" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="weight" placeholder="Gewicht" data-bind="weight" data-target="pace">
             
-            <div tabindex="4" class="button btn-green btn-right spa-link" data-target="pace">
+            <div tabindex="4" class="button btn-green btn-right spa-link p-right-50" data-target="pace">
                 <span>Bereken je run</span>
                 <svg class="icon-next" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <line x1="50" y1="30" x2="10" y2="70" stroke="currentColor" stroke-width="currentStrokeWidth" stroke-linecap="round" />
@@ -120,10 +119,11 @@
 </div></app-form>
                 <app-pace><div class="page" id="pace">
     <div class="container">
-        <div class="pace-text-wrapper"> 
+        <div class="pace-text-wrapper">
             <div class="right-side-head" data-display="name">Hoi <span data-resolve="name"></span>!</div>
             <div class="right-side-head" #else>Hoi!</div>
-            <div class="right-side-main">Bereken je tijden aan de hand van een eerder gelopen run of door je gemiddelde tempo per kilometer.</div>
+            <div class="right-side-main">Bereken je tijden aan de hand van een eerder gelopen run of door je gemiddelde
+                tempo per kilometer.</div>
             <br />
             <div class="right-side-main">Maak je run persoonlijk en nog uitdagender met een negatieve split.</div>
         </div>
@@ -138,23 +138,25 @@
                         <div class="form-row">
                             <div class="form-column">
                                 <label>afstand</label>
-                                    <div class="range-label-container">
-                                        <span class="range-label" id="kilometer-range-label"></span>
-                                    </div>
-                                    <div class="range-container">
-                                        <input tabindex="0" type="range" step="1" min="0" max="422" value="0" id="kilometer">
-                                    </div>
+                                <div class="range-label-container">
+                                    <span class="range-label" id="kilometer-range-label"></span>
+                                </div>
+                                <div class="range-container">
+                                    <input tabindex="0" type="range" step="1" min="0" max="422" value="0"
+                                        id="kilometer">
+                                </div>
                             </div>
                             <div class="form-column" style="width: 60px;">
                                 <label class="center">KM</label>
-                                <input type="text" value="0" id="kilometer-input" class="input-readonly bg-gray" readonly>
+                                <input type="text" value="0" id="kilometer-input" class="input-readonly bg-gray"
+                                    readonly>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-column">
                                 <label>Tijd</label>
                                 <div class="row" id="time-input-fields">
-                                    
+
                                     <div class="select-wrapper">
                                         <select tabindex="1" onchange="onTimeUpdate()" id="hours">
                                         </select>
@@ -218,21 +220,25 @@
                             </div>
                         </div>
                         <div class="pace-button-wrapper">
-                            <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">Personaliseren<span data-display="name#weight#age"><img src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
-                            <div tabindex="8" class="button btn-white-panel spa-link" data-target="negative-split">Negatieve split<span data-display="negative-split-range"><img src="./icons/Gedaan.svg"></span></span><span #else class="plus-icon"></span></div>
+                            <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">
+                                Personaliseren<span data-display="name#weight#age"><img
+                                        src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
+                            <div tabindex="8" class="button btn-white-panel spa-link" data-target="negative-split">
+                                Negatieve split<span data-display="negative-split-range"><img
+                                        src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span>
+                            </div>
                         </div>
 
-                        <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span></div>
+                        <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span>
+                        </div>
                         <div tabindex="10" class="button btn-transparent spa-link" data-target="landing">Terug</div>
                     </div>
+                </div>
             </div>
-        </div>
         </div>
         <div class="filler"></div>
     </div>
-</div>
-
-</app-pace>
+</div></app-pace>
                 <app-result><div class="page" id="result">
     <div class="container">
         <div class="pace-text-wrapper">
@@ -265,6 +271,11 @@
                                 <div class="panel-detail-label">Negatieve split</div>
                             </div>
                         </div>
+                        <hr data-display="age|weight|negative-split-range" style="
+                            border:0px none white;
+                            border-top:1px solid lightgrey;
+                            width: 100%;
+                        ">
                         <div class="row space">
                             <div class="panel-detail-col">
                                 <div class="panel-detail-value" data-resolve="kilometer-input">&nbsp;</div>
@@ -308,17 +319,6 @@
                 <div class="WIMH-sub-header">Is een project van</div>
                 <p>Aron de Boks</p>
                 <p>Micha de Boks</p>
-                <br />
-                
-                <div class="WIMH-sub-header">Met hulp van</div>
-                <p>Koole Sport</p>
-                <p>Powerbar Energygel</p>
-                <p>Kustmarathon Zeeland</p>
-                <br />
-
-                <div class="WIMH-sub-header">En fotografie van</div>
-                <p>Thomas Brouwer</p>
-                
             </div>
         </div>
     </div>

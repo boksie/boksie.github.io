@@ -136,7 +136,6 @@ const app = {
                 e.preventDefault();
         
                 const currentTabId = page.querySelector(':focus').getAttribute('tabindex');
-                console.log(page.querySelector(':focus'));
                 let modifier = 1;
                 if (e.shiftKey) {
                     modifier = -1;                    
@@ -147,22 +146,24 @@ const app = {
     },
     escape: () => {
         document.addEventListener('keydown', (e) => {
-            const previousPageElement = document.querySelector('.active');
-            if (previousPageElement.hasAttribute('data-escapable')) {
-                let currentPage = previousPageElement.getAttribute('data-escapable');
+            if (e.key === 'Escape') {
+                const previousPageElement = document.querySelector('.active');
+                if (previousPageElement.hasAttribute('data-escapable')) {
+                    let currentPage = previousPageElement.getAttribute('data-escapable');
 
-                if (currentPage === 'previous') {
-                    currentPage = app.previousPage;
+                    if (currentPage === 'previous') {
+                        currentPage = app.previousPage;
+                    }
+            
+                    if (previousPageElement.classList.contains('active')) {
+                        previousPageElement.classList.remove('active')
+                    }
+                    
+                    document.getElementById(currentPage).classList.add('active');
+                    document.getElementById(currentPage).dispatchEvent(app.flip);
+            
+                    app.previousPage = previousPageElement.id;
                 }
-        
-                if (previousPageElement.classList.contains('active')) {
-                    previousPageElement.classList.remove('active')
-                }
-                
-                document.getElementById(currentPage).classList.add('active');
-                document.getElementById(currentPage).dispatchEvent(app.flip);
-        
-                app.previousPage = previousPageElement.id;
             }
         })
     }
@@ -791,6 +792,7 @@ function HandlePaceKeyInput(element, change) {
 
         const averagePace = getAveragePace();
         const newPace = averagePace.minutes * 60 + averagePace.seconds;
+        totalTimeLastUpdated = false;
 
         updatePaceTime(newPace);
         setCaretPosition(element, caretPosition);
@@ -881,7 +883,7 @@ function setTimePaceInput(totalTimeInSeconds) {
 //////////////////////////////////////////////////
 function updateAveragePaceByAverageSpeed(averageSpeed) {
     const newAverageTimeInSeconds = (1 / (averageSpeed / 3600));
-    if (newAverageTimeInSeconds < 0 || newAverageTimeInSeconds >= 3600) {
+    if (newAverageTimeInSeconds < 0 || newAverageTimeInSeconds > 3600) {
         return;
     }
 
@@ -923,8 +925,13 @@ function HandleSpeedKeyInput(speedInput, element) {
             }
         }
 
-        if (e.key == 'Backspace') {
-            let caretPosition = window.getSelection().anchorOffset;
+        let caretPosition = window.getSelection().anchorOffset;
+        if (e.key == 'Delete' && e.currentTarget.innerText[caretPosition] === ',') {    
+            setCaretPosition(e.currentTarget, ++caretPosition);
+            e.preventDefault();
+        }
+
+        if (e.key == 'Backspace' && e.currentTarget.innerText[caretPosition - 1] === ',') {    
             setCaretPosition(e.currentTarget, --caretPosition);
             e.preventDefault();
         }
@@ -952,6 +959,7 @@ function HandleSpeedKeyInput(speedInput, element) {
     })
 
     element.addEventListener('input', (e) => {
+        console.log(e);
         speedInput.caretPosition = window.getSelection().anchorOffset;
         let averageSpeed = Number.parseFloat(e.currentTarget.innerText.replace(',', '.'));
         let roundedAverageSpeed = Math.floor(averageSpeed * 10) / 10;
@@ -964,6 +972,7 @@ function HandleSpeedKeyInput(speedInput, element) {
 
         e.currentTarget.innerText = roundedAverageSpeed;
         element.value = roundedAverageSpeed;        
+        totalTimeLastUpdated = false;
 
         updateSpeedField(e.currentTarget, roundedAverageSpeed);
         updateSpeedSubscribers(roundedAverageSpeed);
@@ -983,12 +992,17 @@ function handleSpeedButtonEvents(speedInput, element, change, speedElement) {
 }
 
 function updateSpeedSubscribers(averageSpeed) {
+    if (averageSpeed < 1) {
+        return;
+    }
+
     updatePaceByAverageSpeed(averageSpeed);
     updateAveragePaceByAverageSpeed(averageSpeed);
 }
 
 
 function onUpdateSpeed(change, speedElement) {
+    totalTimeLastUpdated = false;
     const newSpeed = Math.round((speedElement.value + change) * 100) / 100;
     updateSpeedField(speedElement, newSpeed);
     updateSpeedSubscribers(newSpeed);
@@ -1101,6 +1115,8 @@ function calculateValues(distanceInKm, totalSecondsForDistance, weight) {
         distance = '<b>Halve</b>';
     } else if (distanceInKm === 42.195) {
         distance = '<b>Marathon</b>';
+    } else {
+        distance = distance + ' km';
     }
 
     const pace = calculatePace(totalSecondsForDistance, distanceInKm);
@@ -1108,13 +1124,13 @@ function calculateValues(distanceInKm, totalSecondsForDistance, weight) {
 
     const totalTime = convertFromSeconds(totalSecondsForDistance);
     const timeString = timeToString(totalTime, 'h:mm:ss', ':', true);
-    const kcal = calculateKcal(distanceInKm, weight, totalSecondsForDistance);
+    const kcal = calculateKcal(distanceInKm, weight, pace);
     let kcalString = '';
     if (kcal) {
         kcalString = kcal.toLocaleString('nl-NL') + ' kcal';
     }
 
-    return [distance + ' km', timeString, kcalString, timeToString(paceTime, 'm:ss') + ' / km'];
+    return [distance, timeString, kcalString, timeToString(paceTime, 'm:ss') + ' / km'];
 }
 
 function getTableHeaders(weight) {
@@ -1125,12 +1141,15 @@ function getTableHeaders(weight) {
     return ['Afstand', 'Tijd', 'Energie', 'Tempo'];
 }
 
-function calculateKcal(distanceInKm, weight, secondsPerKm) {
+function calculateKcal(distanceInKm, weight, pace) {
     if (isNaN(weight)) {
         return '';
     }
-console.log(secondsPerKm / 3600)
-    return Math.round(distanceInKm * weight * (secondsPerKm / 3600));
+    // gewicht    12 km uur       5 km per uur
+    // 75 *       12 *            (5 / 60)
+console.log(document.getElementById('speed').value);
+console.log(typeof(document.getElementById('speed').value));
+    return Math.round(document.getElementById('speed').value * distanceInKm * weight * (pace / 3600));
 }
 
 function convertPaceToString(totalTimeInSeconds, distanceInKm)
