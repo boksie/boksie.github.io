@@ -1,0 +1,8 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle stroke="black" stroke-width="4px" 
+        fill="transparent"  cx="25%" cy="50%" r="8%"/>
+    <circle stroke="black" stroke-width="4px" 
+        fill="transparent"  cx="50%" cy="50%" r="8%"/>
+    <circle stroke="black" stroke-width="4px" 
+        fill="transparent"  cx="75%" cy="50%" r="8%"/>
+</svg>
