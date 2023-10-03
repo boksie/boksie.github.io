@@ -483,6 +483,40 @@ body {
     -webkit-line-clamp: 2; /* number of lines to show */
             line-clamp: 2; 
     -webkit-box-orient: vertical;
+}
+
+@media (max-width: 500px) {
+    .landing-header {
+        font-size: 40px;
+    }
+
+    .form-landing {
+        padding: 0;
+        flex-direction: column;
+    }
+
+    .input-landing {
+        width: 85%;
+        margin: 3px;
+    }
+
+    #age {
+        display: none;
+    }
+
+    #weight {
+        display: none;
+    }
+
+    .btn-right {
+        width: 70%;
+    }
+
+    .body-facts {
+        display: none;
+    }
+
+
 }.p20 {
     padding: 20px;
 }
@@ -558,6 +592,12 @@ body {
     position: absolute;
     top: 20px;
     right: 25px;
+}
+
+@media (max-width: 500px) {
+    .form-fullscreen-body {
+        justify-content: unset;
+    }
 }/**** PANEL *****/
 .panel {
     background-color: #F7F7F7;
@@ -935,6 +975,37 @@ select:focus {
 
 .pace-button-wrapper {
     margin-top: 20px;
+}
+
+@media (max-width: 500px) {
+    .header {
+        display: none;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .pace-text-wrapper {
+        display: none;
+    }
+
+    .panel-container {
+        height: 100%;
+    }
+
+    .panel {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        border-radius: 15px 15px 0px 0px;
+    }
+
+    .panel-body {
+        padding: 20px;
+    }
 }
 /**** TABLE *****/
 
