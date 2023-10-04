@@ -962,7 +962,6 @@ function HandleSpeedKeyInput(speedInput, element) {
     })
 
     element.addEventListener('input', (e) => {
-        console.log(e);
         speedInput.caretPosition = window.getSelection().anchorOffset;
         let averageSpeed = Number.parseFloat(e.currentTarget.innerText.replace(',', '.'));
         let roundedAverageSpeed = Math.floor(averageSpeed * 10) / 10;
