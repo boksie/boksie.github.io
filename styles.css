@@ -795,13 +795,13 @@ body {
     overflow: hidden;
 }
 
-.time-wrapper > * > span {
+/* .time-wrapper > * > span {
     user-select: none;
     -moz-user-select: none;
     -khtml-user-select: none;
     -webkit-user-select: none;
     -o-user-select: none;
-}
+} */
 
 .input-pace-time {
     position: relative;
