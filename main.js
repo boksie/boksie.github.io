@@ -735,6 +735,7 @@ String.prototype.replaceAt = function(index, replacement) {
 
 function HandlePaceKeyInput(element, change) {    
     element.addEventListener('keydown', (e) => {
+        document.getElementById('kilometer-input').value = e.key
         if (!paceInput.defaultAllowedKeys.includes(e.key)) {
             if (!e.ctrlKey) {
                 e.preventDefault();

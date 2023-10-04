@@ -1077,7 +1077,7 @@ tr:nth-last-child(-n + 1) td {
 
 td {
     text-align: right;
-    padding: 7px;
+    padding: 3px 7px;
     font-size: 12px;
     /* padding-right: 30px; */
 }

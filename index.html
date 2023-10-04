@@ -160,9 +160,9 @@
                                     <app-pace-input><div class="time-wrapper">
     <div class="input-pace-time">
         <!-- <span id="average-pace" role="textbox" contenteditable="false" draggable="false"> -->
-            <span tabindex="4" id="average-pace-min" data-next="average-pace-sec" role="textbox" contenteditable="true" draggable="false">00</span>
+            <span tabindex="1" id="average-pace-min" data-next="average-pace-sec" role="textbox" contenteditable="true" draggable="false">00</span>
             <span id="average-pace-seperator" role="textbox" contenteditable="false" draggable="false">:</span>
-            <span tabindex="5" id="average-pace-sec" data-next="speed" role="textbox" contenteditable="true" draggable="false">00</span>
+            <span tabindex="2" id="average-pace-sec" data-next="speed" role="textbox" contenteditable="true" draggable="false">00</span>
             <span>/km</span>
         <!-- </span> -->
 
@@ -182,7 +182,7 @@
 </div></app-pace-input>
                                     <app-speed-input><div class="time-wrapper">
     <div class="input-speed">
-        <span tabindex="6" id="speed" role="textbox" contenteditable>0,0</span><span> km/u</span>
+        <span tabindex="3" id="speed" role="textbox" contenteditable>0,0</span><span> km/u</span>
     </div>
     <div class="time-buttons-right">
         <div class="time-buttons">
@@ -206,15 +206,15 @@
                                 <div class="row" id="time-input-fields">
 
                                     <div class="select-wrapper">
-                                        <select tabindex="1" onchange="onTimeUpdate()" id="hours">
+                                        <select tabindex="4" onchange="onTimeUpdate()" id="hours">
                                         </select>
                                     </div>
                                     <div class="select-wrapper">
-                                        <select tabindex="2" onchange="onTimeUpdate()" id="minutes">
+                                        <select tabindex="5" onchange="onTimeUpdate()" id="minutes">
                                         </select>
                                     </div>
                                     <div class="select-wrapper">
-                                        <select tabindex="3" onchange="onTimeUpdate()" id="seconds">
+                                        <select tabindex="6" onchange="onTimeUpdate()" id="seconds">
                                         </select>
                                     </div>
                                 </div>
