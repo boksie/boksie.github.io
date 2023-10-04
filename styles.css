@@ -841,6 +841,8 @@ body {
 }
 
 [contenteditable] {
+    user-select: text;
+    -webkit-user-select: text;
     outline: 0px solid transparent;
     font-variant-numeric: tabular-nums;
     z-index: 10;
