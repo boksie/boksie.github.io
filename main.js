@@ -481,26 +481,26 @@ function fillWeatherData(json) {
 }const bodyFacts = [
     '2,4 miljoen Nederlanders regelmatig hardlopen',
     'Vrouwen gemiddeld het hardste rennen als ze 29 jaar zijn en mannen 27 jaar',
-    'Hardlopers presteren het best bij een temperatuur rond de 8 graden.',
+    'Hardlopers presteren het best bij een temperatuur rond de 8 graden',
     'Het snelste tempo ooit gemeten voor een mannelijke sprinter op 100 meter is 9,58 seconden, gevestigd door Usain Bolt in 2009.',
     'je een uur moet hardlopen voor het verbranden van een Quattro formaggi',
     'het lopen van een marathon tussen de 2500 en 3000 kcal kost',
     'je lichaam zo’n 60 tot 90 gram koolhydraten per uur opnemen',
     'Een handige vuistregel is dat je bij een grote inspanning iedere 20-30 minuten een gel kan gebruiken',
-    'Je koolhydraatvoorraad is beperkt en hierop kan je zonder aanvulling ongeveer 45 tot 90 minuten hardlopen.',
-    // 'Hardlopen kan helpen bij het verminderen van stress en het verbeteren van de stemming door de afgifte van endorfines, de zogenaamde gelukshormonen.',
-    // 'Hardlopen helpt bij het versterken van je botten. Het is aangetoond dat regelmatig hardlopen de botdichtheid verhoogt en het risico op osteoporose vermindert.',
+    'Je koolhydraatvoorraad is beperkt en hierop kan je zonder aanvulling ongeveer 45 tot 90 minuten hardlopen',
+    // 'Hardlopen kan helpen bij het verminderen van stress en het verbeteren van de stemming door de afgifte van endorfines, de zogenaamde gelukshormonen',
+    // 'Hardlopen helpt bij het versterken van je botten. Het is aangetoond dat regelmatig hardlopen de botdichtheid verhoogt en het risico op osteoporose vermindert',
     'Mensen die meer dan 30 min per dag sporten bereiken een betere en diepere slaap',
     'Regelmatig hardlopen kan het risico op hartaandoeningen, beroertes en diabetes type 2 verminderen',
     'De oudste marathonloper ooit was 101 jaar en liep een marathon in een tijd van 07:49',
     'De Marathon in Denemarken is de snelste marathon ter wereld met een gemiddelde finishtijd van 3u51:22',
     'Je mag 2500 tot 3000 kcal extra eten met een marathon',
-    // 'De eerste georganiseerde marathon vond plaats tijdens de Olympische Spelen van 1896 in Griekenland, gebaseerd op de mythische loopafstand tussen de steden Marathon en Athene.',
-    // 'Het wereldrecord voor de snelste marathontijd bij mannen staat op naam van Eliud Kipchoge uit Kenia, met een tijd van 2 uur, 1 minuut en 39 seconden, behaald in Berlijn in 2018.',
+    // 'De eerste georganiseerde marathon vond plaats tijdens de Olympische Spelen van 1896 in Griekenland, gebaseerd op de mythische loopafstand tussen de steden Marathon en Athene',
+    // 'Het wereldrecord voor de snelste marathontijd bij mannen staat op naam van Eliud Kipchoge uit Kenia, met een tijd van 2 uur, 1 minuut en 39 seconden, behaald in Berlijn in 2018',
     // 'Het wereldrecord voor de snelste marathontijd bij vrouwen staat op naam van Brigid Kosgei uit Kenia, met een tijd van 2 uur, 14 minuten en 4 seconden, behaald in Chicago in 2019',
     'De eerste officiële vrouwenmarathon vond plaats in 1972 in New York City, waarbij slechts acht vrouwen deelnamen',
-    'Hardloopschoenen gaan gemiddeld 650 - 1000 kilometer mee voordat je ze moet vervangen.',
-    'Schoenen hebben ook rust nodig. Het kan wel 48 uur duren voordat je schoenen in hun origineel staat zijn teruggekeerd.',
+    'Hardloopschoenen gaan gemiddeld 650 - 1000 kilometer mee voordat je ze moet vervangen',
+    'Schoenen hebben ook rust nodig. Het kan wel 48 uur duren voordat je schoenen in hun origineel staat zijn teruggekeerd',
     'Er elk jaar meer dan een miljard hardloopschoenen worden verkocht',
 ];
 
@@ -538,8 +538,9 @@ function updateRangeLabel(e) {
     const label = $('negative-split-range-label');
 
     switch (e.target.value) {
-        case '5': label.innerText  = 'high five!'; break;
-        default: label.innerText = '';
+        case '5': label.innerHTML  = 'high five &#x1F596;'; break;
+        case '10': label.innerHTML = 'komeet &#x1F92F;'; break;
+        default: label.innerHTML   = '';
     }
 }
 const rangeSliderMap = [
@@ -623,10 +624,13 @@ function updateRangeInput(e) {
 
     const label = $('kilometer-range-label');
     switch (input.value) {
-        case '5': label.innerText = 'high five!'; break;
-        case '21.1': label.innerText = 'halve marathon!'; break;
-        case '42.195': label.innerText = 'marathon!'; break;
-        default: label.innerText = '';
+        case '5': label.innerHTML = 'high five &#x1F596;'; break;
+        case '10': label.innerHTML = '10K &#x1F64C;'; break;
+        case '16.1': label.innerHTML = '10 EM!'; break;
+        case '21.1': label.innerHTML = 'halve marathon!'; break;
+        case '30': label.innerHTML = 'dirty 30 &#x1F480;'; break;
+        case '42.195': label.innerHTML = 'marathon &#x1F947;'; break;
+        default: label.innerHTML = '';
     }
 }
 
@@ -698,7 +702,6 @@ function updatePaceByAverageSpeed(averageSpeed) {
 function updatePaceByAveragePace(averagePace) {
     const distanceInKm = $('kilometer-input').value;
     const totalTimeInSeconds = calculateTotalTimeInSeconds(distanceInKm, averagePace);
-    console.log(totalTimeInSeconds);
 
     setTimeInput(totalTimeInSeconds);
 }

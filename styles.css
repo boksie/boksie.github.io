@@ -9,7 +9,6 @@
 
 .button:hover {
     cursor: pointer;
-    font-weight: bolder;
 }
 
 .btn-green {
@@ -32,6 +31,10 @@
     width: 100%;
 }
 
+.btn-green:hover {
+    background-color: #309546B3;
+}
+
 .btn-white {
     min-width: 150px;
     display: flex;
@@ -50,6 +53,7 @@
 
 .btn-white:hover {
     cursor: pointer;
+    font-weight: bolder;
 }
 
 .btn-white > * {
@@ -65,6 +69,10 @@
     font-size: 16px;
     display: flex;
     position: relative;
+}
+
+.btn-white-panel:hover {
+    font-weight: bolder;
 }
 
 .btn-white-panel:focus {
@@ -111,6 +119,10 @@
     text-align: center;
     text-transform: uppercase;
     /* font-weight: bold; */
+}
+
+.btn-transparent:hover {
+    font-weight: bolder;
 }
 
 .btn-transparent:focus {
@@ -426,6 +438,14 @@ body {
     padding: 0px 70px;
 }
 
+.landing-main-short {
+    display: none;
+    font-weight: 400;
+    font-size: 22px;
+    text-align: center;
+    padding: 0px 70px;
+}
+
 .input-landing {
     width: 40px;
     min-width: 95px;
@@ -487,12 +507,20 @@ body {
 
 @media (max-width: 500px) {
     .landing-header {
-        font-size: 40px;
+        font-size: 36px;
     }
 
     .form-landing {
         padding: 0;
         flex-direction: column;
+    }
+
+    .landing-main {
+        display: none;
+    }
+
+    .landing-main-short {
+        display: block;
     }
 
     .input-landing {
@@ -789,7 +817,7 @@ body {
 
 .time-buttons-right {
     position: absolute;
-    right: 5px;
+    right: 0;
     height: 100%;
     background-color: white;
 }

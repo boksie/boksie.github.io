@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -18,8 +18,9 @@
 
                 <app-landing><div class="page active" id="landing">
     <div class="container column landing-container">
-        <div class="landing-header">Wat is mijn hardlooptijd?</div>
-        <div class="landing-main">Bereken eenvoudig je hardlooptijden, personaliseer je tempo en wees op en top voorbereid op je volgende wedstrijd of training.</div>
+        <div class="landing-header">Wat Is Mijn Hardlooptijd?</div>
+        <div class="landing-main">De snelste weg om je hardlooptijden te berekenen. Zo ben je op en top voorbereid op je training of wedstrijd.</div>
+        <div class="landing-main-short">De snelste weg om je hardlooptijden te berekenen.</div>
         <div class="row form-landing">
             <input tabindex="1" class="input-landing" type="text" id="name" placeholder="Voornaam" data-bind="name">
             <input tabindex="2" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="age" placeholder="Leeftijd" data-bind="age">
@@ -47,7 +48,7 @@
         <div class="form-fullscreen-body">
             <div class="form-fullscreen-content">
                 <div class="form-fullscreen-question">Negatieve split</div>
-                <p>Bereken de snelheid van je run om de tweede helft sneller te lopen dan de eerste.</p>
+                <p>De meeste wereldrecords zijn gelopen in een ‘negatieve split’. Hoeveel sneller gaat de tweede helft van je run zijn?</p>
                 <div class="form-row p20">
                     <div class="form-column">
                         <div class="range-label-container">
@@ -107,7 +108,7 @@
         <div class="button btn-round spa-link right-form" data-target="pace"><img height="20px" src="./icons/Sluiten.svg"></div>
         <div class="form-fullscreen-body">
             <div class="form-fullscreen-question">Wat is je gewicht?</div>
-            <p>We vragen dit om je ervaring te personaliseren</p>
+            <p>We vragen dit om een schatting te kunnen maken hoeveel calorieën je verbrandt</p>
             <div class="form-input-button">
                 <input tabindex="0" type="number" onkeydown="allowNumbers(event)" data-bind="weight" placeholder="Gewicht">
                 <svg tabindex="1" class="spa-link" data-target="pace" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -123,10 +124,9 @@
         <div class="pace-text-wrapper">
             <div class="right-side-head" data-display="name">Hoi <span data-resolve="name"></span>!</div>
             <div class="right-side-head" #else>Hoi!</div>
-            <div class="right-side-main">Bereken je tijden aan de hand van een eerder gelopen run of door je gemiddelde
-                tempo per kilometer.</div>
+            <div class="right-side-main">Bereken je tijden op basis van een eerder gelopen run. Of door je gemiddelde tempo in te voeren.</div>
             <br />
-            <div class="right-side-main">Maak je run persoonlijk en nog uitdagender met een negatieve split.</div>
+            <div class="right-side-main">Maak je run persoonlijk en uitdagend met een negatieve split.</div>
         </div>
 
         <div class="panel-container">
@@ -151,26 +151,6 @@
                                 <label class="center">KM</label>
                                 <input type="text" value="0" id="kilometer-input" class="input-readonly bg-gray"
                                     readonly>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-column">
-                                <label>Tijd</label>
-                                <div class="row" id="time-input-fields">
-
-                                    <div class="select-wrapper">
-                                        <select tabindex="1" onchange="onTimeUpdate()" id="hours">
-                                        </select>
-                                    </div>
-                                    <div class="select-wrapper">
-                                        <select tabindex="2" onchange="onTimeUpdate()" id="minutes">
-                                        </select>
-                                    </div>
-                                    <div class="select-wrapper">
-                                        <select tabindex="3" onchange="onTimeUpdate()" id="seconds">
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -220,6 +200,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-column">
+                                <label>Tijd</label>
+                                <div class="row" id="time-input-fields">
+
+                                    <div class="select-wrapper">
+                                        <select tabindex="1" onchange="onTimeUpdate()" id="hours">
+                                        </select>
+                                    </div>
+                                    <div class="select-wrapper">
+                                        <select tabindex="2" onchange="onTimeUpdate()" id="minutes">
+                                        </select>
+                                    </div>
+                                    <div class="select-wrapper">
+                                        <select tabindex="3" onchange="onTimeUpdate()" id="seconds">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pace-button-wrapper">
                             <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">
                                 Personaliseren<span data-display="name#weight#age"><img
@@ -246,6 +246,7 @@
             <div class="right-side-head" data-display="name"><span data-resolve="name"></span>!</div>
             <div class="right-side-head" #else>Hoi!</div>
             <div class="right-side-main">Op basis van jouw gemiddelde tempo van <span id="pace-result" data-resolve="average-pace-min:average-pace-sec">&nbsp;</span> <span data-display="negative-split-range">en een negatieve split van <span id="negative-split-result" data-resolve="negative-split-input">0</span>%</span> is je geschatte eindtijd</div>
+            <br>
             <div class="right-side-main"><u data-resolve="hours:minutes:seconds"></u></div>
         </div>
 
@@ -315,11 +316,14 @@
             <input tabindex="0" class="spa-link" type="hidden">
         </div>
         <div class="WIMH-content">
-            <div class="WIMH-header">Wat is mijn hardlooptijd</div>
+            <div class="WIMH-header">Wat Is Mijn Hardlooptijd</div>
             <div class="WIMH-fullscreen-body">
                 <div class="WIMH-sub-header">Is een project van</div>
                 <p>Aron de Boks</p>
                 <p>Micha de Boks</p>
+
+                <div class="WIMH-sub-header">Betaversie</div>
+                <p>Je maakt op dit moment gebruik van een betaversie.<br> Verbeteringen en wensen zijn atijd welkom.</p>
             </div>
         </div>
     </div>
