@@ -708,7 +708,7 @@ function updatePaceByAveragePace(averagePace) {
 const paceInput = {
     intervalMap: {},
     caretPosition: 0,
-    defaultAllowedKeys: ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 48, 49, 50, 51, 52, 53, 54, 55, 56, 57],
+    defaultAllowedKeys: ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
 }
 
 function initPaceInput() {
@@ -735,12 +735,12 @@ String.prototype.replaceAt = function(index, replacement) {
 
 function HandlePaceKeyInput(element, change) {    
     element.addEventListener('keydown', (e) => {
-        // if (!paceInput.defaultAllowedKeys.includes(e.key)) {
-        //     if (!e.ctrlKey) {
-        //         e.preventDefault();
-        //         return;
-        //     }
-        // }
+        if (!paceInput.defaultAllowedKeys.includes(e.key)) {
+            if (!e.ctrlKey) {
+                e.preventDefault();
+                return;
+            }
+        }
 
         if (e.key == 'Delete') {
             let caretPosition = window.getSelection().anchorOffset;
@@ -770,41 +770,43 @@ function HandlePaceKeyInput(element, change) {
     })
 
     element.addEventListener('input', (e) => {
-        let caretPosition = window.getSelection().anchorOffset;
-        let newValue = 0;
-        if (e.inputType == 'insertFromPaste') {
-            newValue = Number.parseInt(element.innerText);
-            if (newValue > 59) {
-                newValue = 59;
-            }
+        // let caretPosition = window.getSelection().anchorOffset;
+        // let newValue = 0;
+        // if (e.inputType == 'insertFromPaste') {
+        //     newValue = Number.parseInt(element.innerText);
+        //     if (newValue > 59) {
+        //         newValue = 59;
+        //     }
 
-            element.innerText = newValue.toString();
-            element.value = newValue;
-        } else if (e.data !== null && e.data >= '0' && e.data <= '9') {
-            const data = Number.parseInt(e.data);
-            newValue = 0;
-            if (caretPosition == 1) {
-                newValue = data * 10 + Math.floor(element.value % 10);
-            } else {
-                newValue = Math.floor(element.value / 10) * 10 + data;
-            }
+        //     element.innerText = newValue.toString();
+        //     element.value = newValue;
+        // } else if (e.data !== null && e.data >= '0' && e.data <= '9') {
+        //     const data = Number.parseInt(e.data);
+        //     newValue = 0;
+        //     if (caretPosition == 1) {
+        //         newValue = data * 10 + Math.floor(element.value % 10);
+        //     } else {
+        //         newValue = Math.floor(element.value / 10) * 10 + data;
+        //     }
             
-            element.innerText = newValue.toString();
-            element.value = newValue;
-        }
+        //     element.innerText = newValue.toString();
+        //     element.value = newValue;
+        // }
 
-        const averagePace = getAveragePace();
-        const newPace = averagePace.minutes * 60 + averagePace.seconds;
-        totalTimeLastUpdated = false;
+        document.getElementById('kilometer-input').value = element.innerText;
 
-        updatePaceTime(newPace);
-        setCaretPosition(element, caretPosition);
-        if (caretPosition === 2) {
-            const nextElementId = e.currentTarget.getAttribute('data-next');
-            const nextElement = document.getElementById(nextElementId);
+        // const averagePace = getAveragePace();
+        // const newPace = averagePace.minutes * 60 + averagePace.seconds;
+        // totalTimeLastUpdated = false;
+
+        // updatePaceTime(newPace);
+        // setCaretPosition(element, caretPosition);
+        // if (caretPosition === 2) {
+        //     const nextElementId = e.currentTarget.getAttribute('data-next');
+        //     const nextElement = document.getElementById(nextElementId);
             
-            nextElement.focus();
-        }
+        //     nextElement.focus();
+        // }
     })
 }
 
