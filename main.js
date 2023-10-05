@@ -735,78 +735,76 @@ String.prototype.replaceAt = function(index, replacement) {
 
 function HandlePaceKeyInput(element, change) {    
     element.addEventListener('keydown', (e) => {
-        // if (!paceInput.defaultAllowedKeys.includes(e.key)) {
-        //     if (!e.ctrlKey) {
-        //         e.preventDefault();
-        //         return;
-        //     }
-        // }
+        if (!paceInput.defaultAllowedKeys.includes(e.key)) {
+            if (!e.ctrlKey) {
+                e.preventDefault();
+                return;
+            }
+        }
 
-        // if (e.key == 'Delete') {
-        //     let caretPosition = window.getSelection().anchorOffset;
-        //     setCaretPosition(e.currentTarget, ++caretPosition);
-        // }
+        if (e.key == 'Delete') {
+            let caretPosition = window.getSelection().anchorOffset;
+            setCaretPosition(e.currentTarget, ++caretPosition);
+        }
 
-        // if (e.key == 'ArrowUp') {
-        //     e.preventDefault();
-        //     onPaceUpdate(change);
-        // }
+        if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            onPaceUpdate(change);
+        }
 
-        // if (e.key == 'ArrowDown') {
-        //     e.preventDefault();
-        //     onPaceUpdate(-change);
-        // }
+        if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            onPaceUpdate(-change);
+        }
     })
     
-    // element.addEventListener('paste', (e) => {
-    //     let paste = e.clipboardData.getData('text');
-    //     if (isNaN(Number.parseInt(paste))) {
-    //         e.preventDefault();
-    //     }
-    // })
+    element.addEventListener('paste', (e) => {
+        let paste = e.clipboardData.getData('text');
+        if (isNaN(Number.parseInt(paste))) {
+            e.preventDefault();
+        }
+    })
 
-    // element.addEventListener('drop', (e) => {
-    //     e.preventDefault();
-    // })
+    element.addEventListener('drop', (e) => {
+        e.preventDefault();
+    })
 
     element.addEventListener('input', (e) => {
-        // let caretPosition = window.getSelection().anchorOffset;
-        // let newValue = 0;
-        // if (e.inputType == 'insertFromPaste') {
-        //     newValue = Number.parseInt(element.innerText);
-        //     if (newValue > 59) {
-        //         newValue = 59;
-        //     }
+        let caretPosition = window.getSelection().anchorOffset;
+        let newValue = 0;
+        if (e.inputType == 'insertFromPaste') {
+            newValue = Number.parseInt(element.innerText);
+            if (newValue > 59) {
+                newValue = 59;
+            }
 
-        //     element.innerText = newValue.toString();
-        //     element.value = newValue;
-        // } else if (e.data !== null && e.data >= '0' && e.data <= '9') {
-        //     const data = Number.parseInt(e.data);
-        //     newValue = 0;
-        //     if (caretPosition == 1) {
-        //         newValue = data * 10 + Math.floor(element.value % 10);
-        //     } else {
-        //         newValue = Math.floor(element.value / 10) * 10 + data;
-        //     }
+            element.innerText = newValue.toString();
+            element.value = newValue;
+        } else if (e.data !== null && e.data >= '0' && e.data <= '9') {
+            const data = Number.parseInt(e.data);
+            newValue = 0;
+            if (caretPosition == 1) {
+                newValue = data * 10 + Math.floor(element.value % 10);
+            } else {
+                newValue = Math.floor(element.value / 10) * 10 + data;
+            }
             
-        //     element.innerText = newValue.toString();
-        //     element.value = newValue;
-        // }
+            element.innerText = newValue.toString();
+            element.value = newValue;
+        }
 
-        document.getElementById('kilometer-input').value = element.innerText;
+        const averagePace = getAveragePace();
+        const newPace = averagePace.minutes * 60 + averagePace.seconds;
+        totalTimeLastUpdated = false;
 
-        // const averagePace = getAveragePace();
-        // const newPace = averagePace.minutes * 60 + averagePace.seconds;
-        // totalTimeLastUpdated = false;
-
-        // updatePaceTime(newPace);
-        // setCaretPosition(element, caretPosition);
-        // if (caretPosition === 2) {
-        //     const nextElementId = e.currentTarget.getAttribute('data-next');
-        //     const nextElement = document.getElementById(nextElementId);
+        updatePaceTime(newPace);
+        setCaretPosition(element, caretPosition);
+        if (caretPosition === 2) {
+            const nextElementId = e.currentTarget.getAttribute('data-next');
+            const nextElement = document.getElementById(nextElementId);
             
-        //     nextElement.focus();
-        // }
+            nextElement.focus();
+        }
     })
 }
 
