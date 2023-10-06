@@ -312,7 +312,22 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-@font-face {
+@media (max-width: 500px) {
+    input[type=range] {
+        height: 18px;
+        border-radius: 18px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        height: 18px;
+        width: 18px;
+    }
+
+    input[type=range]::-moz-range-thumb {
+        height: 18px;
+        width: 18px;
+    }
+}@font-face {
     font-family: Montserrat;
     src: url('./fonts/Montserrat-VariableFont_wght.ttf');
 }
@@ -666,23 +681,11 @@ body {
     box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
 }
 
-.panel-container {
-    /* position: relative;
-    margin: auto;
-    right: 0;
-    left: 0;
-    max-width: 400px; */
-}
 
 .filler {
     width: 400px;
 }
 
-@media (min-width: 1500px) {
-    .panel-container {
-        /* position: absolute; */
-    }
-}
 
 .panel-detail {
     display: flex;
@@ -1030,6 +1033,7 @@ select:focus {
     
     .panel-container {
         overflow: scroll;
+        min-height: 600px;
         height: 100%;
         width: 100%;
     }
