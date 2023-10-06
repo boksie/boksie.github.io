@@ -539,7 +539,7 @@ function updateRangeLabel(e) {
 
     switch (e.target.value) {
         case '5': label.innerHTML  = 'high five &#x1F596;'; break;
-        case '10': label.innerHTML = 'komeet &#x1F64C;'; break;
+        case '10': label.innerHTML = 'komeet &#x1F92F;'; break;
         default: label.innerHTML   = '';
     }
 }
