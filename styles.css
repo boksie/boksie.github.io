@@ -646,8 +646,19 @@ body {
 }
 
 @media (max-width: 500px) {
+    .form-fullscreen {
+        height: 100%;
+    }
     .form-fullscreen-body {
-        justify-content: unset;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        position: unset;
+        max-width: unset;
+        min-height: unset;
+        transform: unset;
+        -webkit-transform: unset;
     }
 
     .form-row {
@@ -1035,7 +1046,10 @@ select:focus {
         display: unset;
         align-content: center;
         display: flex;
-        /* gap: 2%; */
+    }
+
+    .landing-container {
+        gap: 2%;
     }
 
     .pace-text-wrapper {
@@ -1075,6 +1089,11 @@ select:focus {
         left: 0;
         right: 0;
     }
+
+    .form-fullscreen-body {
+        width: 85%;
+        margin: auto;
+    }
 }
 /**** TABLE *****/
 
@@ -1107,7 +1126,7 @@ th {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 12px;
-    padding: 5px 2px;
+    padding: 5px 0px;
 }
 
 tr:nth-last-child(-n + 1) td {
@@ -1117,7 +1136,7 @@ tr:nth-last-child(-n + 1) td {
 td {
     font-variant-numeric: tabular-nums;
     text-align: right;
-    padding: 3px 7px;
+    padding: 4px 0px;
     font-size: 12px;
     /* padding-right: 30px; */
 }

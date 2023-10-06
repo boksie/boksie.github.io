@@ -1150,7 +1150,7 @@ function calculateValues(distanceInKm, totalSecondsForDistance, weight) {
     const paceTime = convertFromSeconds(pace);
 
     const totalTime = convertFromSeconds(totalSecondsForDistance);
-    const timeString = timeToString(totalTime, 'h:mm:ss', ':');
+    const timeString = timeToString(totalTime, 'hh:mm:ss', ':');
     const kcal = calculateKcal(distanceInKm, weight, pace);
     let kcalString = '';
     if (kcal) {
