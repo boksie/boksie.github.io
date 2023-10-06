@@ -6,11 +6,13 @@ const app = {
     flip: new Event('flip'),
     init: () => {
         app.bind();
+        app.escape();
         app.pages = document.querySelectorAll('.page');
         app.pages.forEach((pg) => {
             pg.addEventListener('flip', app.resolve);
             pg.addEventListener('flip', app.display);
             pg.addEventListener('flip', app.run);
+            pg.addEventListener('flip', app.tab);
         });
 
         document.querySelectorAll('.spa-link').forEach((link) => {
@@ -20,10 +22,6 @@ const app = {
             if (currentPage === 'landing') {
                 link.addEventListener('click', app.clear);
             }
-        });
-
-        document.querySelectorAll('.spa-enter').forEach((link) => {
-            link.addEventListener('keypress', (e) => { if (e.key === 'Enter') app.nav(e) });
         });
     
         initStart();
@@ -61,8 +59,8 @@ const app = {
         if (dataToResolve.length > 0) {
             dataToResolve.forEach((element) => {
                 let id = element.getAttribute('data-display');
-                if (id.includes('&')) {
-                    const ids = id.split('&');
+                if (id.includes('#')) {
+                    const ids = id.split('#');
                     const displayElement = shouldDisplayElement(ids);
                     element.style.display = displayElement ? "" : "none";
 
@@ -129,11 +127,52 @@ const app = {
             window[functionName]();
         });
     },
-    tabbing: (e) => {
+    tab: (e) => {
+        const page = e.target;
+        focusElement(page, 0);
+
+        page.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
         
+                const currentTabId = page.querySelector(':focus').getAttribute('tabindex');
+                let modifier = 1;
+                if (e.shiftKey) {
+                    modifier = -1;                    
+                }
+                focusElement(page, Number.parseInt(currentTabId) + modifier);
+            }
+        })
+    },
+    escape: () => {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const previousPageElement = document.querySelector('.active');
+                if (previousPageElement.hasAttribute('data-escapable')) {
+                    let currentPage = previousPageElement.getAttribute('data-escapable');
+
+                    if (currentPage === 'previous') {
+                        currentPage = app.previousPage;
+                    }
+            
+                    if (previousPageElement.classList.contains('active')) {
+                        previousPageElement.classList.remove('active')
+                    }
+                    
+                    document.getElementById(currentPage).classList.add('active');
+                    document.getElementById(currentPage).dispatchEvent(app.flip);
+            
+                    app.previousPage = previousPageElement.id;
+                }
+            }
+        })
     }
 }
 
+/**
+ * @param {*} value 
+ * @returns {boolean}
+ */
 function isValueEmpty(value) {
     switch (typeof value) {
         case "string":
@@ -151,6 +190,10 @@ function isValueEmpty(value) {
     }
 }
 
+/**
+ * @param {Element} element 
+ * @param {Element} displayElement 
+ */
 function setDisplaySiblingElement(element, displayElement) {
     const nextSibling = element.nextElementSibling;
     if (nextSibling !== null && 
@@ -160,6 +203,11 @@ function setDisplaySiblingElement(element, displayElement) {
     }
 }
 
+/**
+ * @param {Array} ids 
+ * @param {boolean} allTrue 
+ * @returns 
+ */
 function shouldDisplayElement(ids, allTrue = true) {
     let displayElement = allTrue;
     ids.forEach((id) => {
@@ -182,19 +230,23 @@ function shouldDisplayElement(ids, allTrue = true) {
 
 document.addEventListener('DOMContentLoaded', app.init);
 
+/**
+ * @param {Element} page 
+ * @param {number} id 
+ */
+function focusElement(page, id) {
+    let nextTab = page.querySelector(`[tabindex="${id}"]`);
+    if (nextTab === null) {
+        nextTab = page.querySelector(`[tabindex="0"]`);
+    }
 
-// const test = document.querySelector('#landing');
-// test.addEventListener('keydown', (e) => {
-//     if (e.key === 'Tab') {
-//         e.preventDefault();
+    if (nextTab !== null) {
+        nextTab.focus();
+    }
+}
 
-//         const currentTabId = test.querySelector(':focus').getAttribute('tabindex');
-//         const nextTab = test.querySelector(`[tabindex="${Number.parseInt(currentTabId) + 1}"]`);
-//         if (nextTab !== null) {
-//             nextTab.focus();
-//         }
-//     }
-// })
+
+// const test = document.querySelector('#pace');
 
 // const test2 = document.querySelector('#name-form');
 // test.addEventListener('keydown', (e) => {
@@ -286,7 +338,7 @@ function padLeft(value, count) {
     return result + value.toString();
 }
 
-function toString(time, format, seperator = ':', ignoreZero = false) {
+function timeToString(time, format, seperator = ':', ignoreZero = false) {
     const formatArray = format.split(seperator);
     let result = [];
     let timePartAsString;
@@ -423,10 +475,36 @@ function fillWeatherData(json) {
 
      if (weatherJson.id < 800) {
         const background = document.querySelector('.background');
-        background.classList.remove('blue-sky');
+        background.classList.remove('dry');
         background.classList.add('rain');
      }
-}function initLanding() {
+}const bodyFacts = [
+    '2,4 miljoen Nederlanders regelmatig hardlopen',
+    'Vrouwen gemiddeld het hardste rennen als ze 29 jaar zijn en mannen 27 jaar',
+    'Hardlopers presteren het best bij een temperatuur rond de 8 graden',
+    'Het snelste tempo ooit gemeten voor een mannelijke sprinter op 100 meter is 9,58 seconden, gevestigd door Usain Bolt in 2009.',
+    'je een uur moet hardlopen voor het verbranden van een Quattro formaggi',
+    'het lopen van een marathon tussen de 2500 en 3000 kcal kost',
+    'je lichaam zo’n 60 tot 90 gram koolhydraten per uur opnemen',
+    'Een handige vuistregel is dat je bij een grote inspanning iedere 20-30 minuten een gel kan gebruiken',
+    'Je koolhydraatvoorraad is beperkt en hierop kan je zonder aanvulling ongeveer 45 tot 90 minuten hardlopen',
+    // 'Hardlopen kan helpen bij het verminderen van stress en het verbeteren van de stemming door de afgifte van endorfines, de zogenaamde gelukshormonen',
+    // 'Hardlopen helpt bij het versterken van je botten. Het is aangetoond dat regelmatig hardlopen de botdichtheid verhoogt en het risico op osteoporose vermindert',
+    'Mensen die meer dan 30 min per dag sporten bereiken een betere en diepere slaap',
+    'Regelmatig hardlopen kan het risico op hartaandoeningen, beroertes en diabetes type 2 verminderen',
+    'De oudste marathonloper ooit was 101 jaar en liep een marathon in een tijd van 07:49',
+    'De Marathon in Denemarken is de snelste marathon ter wereld met een gemiddelde finishtijd van 3u51:22',
+    'Je mag 2500 tot 3000 kcal extra eten met een marathon',
+    // 'De eerste georganiseerde marathon vond plaats tijdens de Olympische Spelen van 1896 in Griekenland, gebaseerd op de mythische loopafstand tussen de steden Marathon en Athene',
+    // 'Het wereldrecord voor de snelste marathontijd bij mannen staat op naam van Eliud Kipchoge uit Kenia, met een tijd van 2 uur, 1 minuut en 39 seconden, behaald in Berlijn in 2018',
+    // 'Het wereldrecord voor de snelste marathontijd bij vrouwen staat op naam van Brigid Kosgei uit Kenia, met een tijd van 2 uur, 14 minuten en 4 seconden, behaald in Chicago in 2019',
+    'De eerste officiële vrouwenmarathon vond plaats in 1972 in New York City, waarbij slechts acht vrouwen deelnamen',
+    'Hardloopschoenen gaan gemiddeld 650 - 1000 kilometer mee voordat je ze moet vervangen',
+    'Schoenen hebben ook rust nodig. Het kan wel 48 uur duren voordat je schoenen in hun origineel staat zijn teruggekeerd',
+    'Er elk jaar meer dan een miljard hardloopschoenen worden verkocht',
+];
+
+function initLanding() {
     document.getElementById('facts').addEventListener('click', (e) => {        
         const cls = 'extend-facts';
         const target = e.currentTarget;
@@ -435,13 +513,24 @@ function fillWeatherData(json) {
             target.querySelector('span').innerText = 'Body Fact';
         } else {
             target.classList.add(cls);
-            target.querySelector('span').innerText = 'Je lichaam neemt ongeveer 60 tot 90 gram koolhydraten op per uur';
+            const randomIndex = getRandomInt(0, bodyFacts.length);
+            target.querySelector('span').innerText = bodyFacts[randomIndex];
         }
     });
 }
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min) + min);
+  }
 function initNegativeSplit() {
-    $('negative-split').addEventListener('input', (e) => {  
+
+    $('negative-split-range').value = 0;
+    $('negative-split-range').addEventListener('input', (e) => {
         updateRangeLabel(e);
+        $('negative-split-input').innerText = e.target.value;
     });
 }
 
@@ -449,34 +538,92 @@ function updateRangeLabel(e) {
     const label = $('negative-split-range-label');
 
     switch (e.target.value) {
-        case '5': label.innerText  = 'high five!'; break;
-        default: label.innerText = '';
+        case '5': label.innerHTML  = 'high five &#x1F596;'; break;
+        case '10': label.innerHTML = 'komeet &#x1F64C;'; break;
+        default: label.innerHTML   = '';
     }
 }
 const rangeSliderMap = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
-    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-    41, 42, 42.195
+    0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
+    1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 
+    2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 
+    3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 
+    4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 
+    5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+    5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0,
+    5.0, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8, 5.9, 
+    6.0, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 
+    7.0, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 
+    8.0, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 
+    9.0, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 9.9,
+    10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0,
+    10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0,
+    10.0, 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9, 
+    11.0, 11.1, 11.2, 11.3, 11.4, 11.5, 11.6, 11.7, 11.8, 11.9, 
+    12.0, 12.1, 12.2, 12.3, 12.4, 12.5, 12.6, 12.7, 12.8, 12.9, 
+    13.0, 13.1, 13.2, 13.3, 13.4, 13.5, 13.6, 13.7, 13.8, 13.9, 
+    14.0, 14.1, 14.2, 14.3, 14.4, 14.5, 14.6, 14.7, 14.8, 14.9, 
+    15.0, 15.1, 15.2, 15.3, 15.4, 15.5, 15.6, 15.7, 15.8, 15.9, 
+    16.0, 16.1,
+    16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 
+    16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1, 16.1,
+    16.2, 16.3, 16.4, 16.5, 16.6, 16.7, 16.8, 16.9, 
+    17.0, 17.1, 17.2, 17.3, 17.4, 17.5, 17.6, 17.7, 17.8, 17.9, 
+    18.0, 18.1, 18.2, 18.3, 18.4, 18.5, 18.6, 18.7, 18.8, 18.9, 
+    19.0, 19.1, 19.2, 19.3, 19.4, 19.5, 19.6, 19.7, 19.8, 19.9, 
+    20.0, 20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7, 20.8, 20.9, 
+    21.0, 21.1, 
+    21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1,  
+    21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 21.1, 
+    21.2, 21.3, 21.4, 21.5, 21.6, 21.7, 21.8, 21.9, 
+    22.0, 22.1, 22.2, 22.3, 22.4, 22.5, 22.6, 22.7, 22.8, 22.9, 
+    23.0, 23.1, 23.2, 23.3, 23.4, 23.5, 23.6, 23.7, 23.8, 23.9, 
+    24.0, 24.1, 24.2, 24.3, 24.4, 24.5, 24.6, 24.7, 24.8, 24.9, 
+    25.0, 25.1, 25.2, 25.3, 25.4, 25.5, 25.6, 25.7, 25.8, 25.9, 
+    26.0, 26.1, 26.2, 26.3, 26.4, 26.5, 26.6, 26.7, 26.8, 26.9, 
+    27.0, 27.1, 27.2, 27.3, 27.4, 27.5, 27.6, 27.7, 27.8, 27.9, 
+    28.0, 28.1, 28.2, 28.3, 28.4, 28.5, 28.6, 28.7, 28.8, 28.9, 
+    29.0, 29.1, 29.2, 29.3, 29.4, 29.5, 29.6, 29.7, 29.8, 29.9, 
+    30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0,
+    30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0,
+    30.0, 30.1, 30.2, 30.3, 30.4, 30.5, 30.6, 30.7, 30.8, 30.9, 
+    31.0, 31.1, 31.2, 31.3, 31.4, 31.5, 31.6, 31.7, 31.8, 31.9, 
+    32.0, 32.1, 32.2, 32.3, 32.4, 32.5, 32.6, 32.7, 32.8, 32.9, 
+    33.0, 33.1, 33.2, 33.3, 33.4, 33.5, 33.6, 33.7, 33.8, 33.9, 
+    34.0, 34.1, 34.2, 34.3, 34.4, 34.5, 34.6, 34.7, 34.8, 34.9, 
+    35.0, 35.1, 35.2, 35.3, 35.4, 35.5, 35.6, 35.7, 35.8, 35.9, 
+    36.0, 36.1, 36.2, 36.3, 36.4, 36.5, 36.6, 36.7, 36.8, 36.9, 
+    37.0, 37.1, 37.2, 37.3, 37.4, 37.5, 37.6, 37.7, 37.8, 37.9, 
+    38.0, 38.1, 38.2, 38.3, 38.4, 38.5, 38.6, 38.7, 38.8, 38.9, 
+    39.0, 39.1, 39.2, 39.3, 39.4, 39.5, 39.6, 39.7, 39.8, 39.9, 
+    40.0, 40.1, 40.2, 40.3, 40.4, 40.5, 40.6, 40.7, 40.8, 40.9, 
+    41.0, 41.1, 41.2, 41.3, 41.4, 41.5, 41.6, 41.7, 41.8, 41.9, 
+    42.0, 42.1, 42.195
 ];
+
+let totalTimeLastUpdated = true;
 
 function initPace() {
     const hours = document.getElementById('hours');
     const minutes = document.getElementById('minutes');
     const seconds = document.getElementById('seconds');
 
-    createSelectOptions(hours, 6, 'uur');
-    createSelectOptions(minutes, 60, 'min.', 24);
+    createSelectOptions(hours, 9, 'uur');
+    createSelectOptions(minutes, 60, 'min.');
     createSelectOptions(seconds, 60, 'sec.');
 
-    $('kilometer').addEventListener('input', (e) => {  
+    $('kilometer').addEventListener('input', (e) => {
         updateRangeInput(e);
-        onTimeUpdate();
+        if (totalTimeLastUpdated) {
+            onTimeUpdate();
+        } else {
+            onPaceUpdate();
+        }
     });
 }
 
 function onTimeUpdate() {
+    totalTimeLastUpdated = true;
     const totalTime = getTimeInput();
 
     updateAveragePaceByTotalTime(totalTime);
@@ -489,9 +636,13 @@ function updateRangeInput(e) {
 
     const label = $('kilometer-range-label');
     switch (input.value) {
-        case '5': label.innerText  = 'high five!'; break;
-        case '42.195': label.innerText  = 'marathon!'; break;
-        default: label.innerText = '';
+        case '5': label.innerHTML = 'high five &#x1F596;'; break;
+        case '10': label.innerHTML = '10K &#x1F64C;'; break;
+        case '16.1': label.innerHTML = '10 EM!'; break;
+        case '21.1': label.innerHTML = 'halve marathon!'; break;
+        case '30': label.innerHTML = 'dirty 30 &#x1F480;'; break;
+        case '42.195': label.innerHTML = 'marathon &#x1F947;'; break;
+        default: label.innerHTML = '';
     }
 }
 
@@ -503,16 +654,12 @@ function setTimeInput(timeInSeconds) {
     $('seconds').value = time.seconds;
 }
 
-function createSelectOptions(element, total, postfix, selectedValue = 0) {
+function createSelectOptions(element, total, postfix) {
     for (let i = 0; i < total; i++) {
         const option = document.createElement('option')
         option.innerHTML = `${i} ${postfix}`;
         option.value = i;
         element.appendChild(option);
-
-        if (selectedValue === i) {
-            option.selected = true;
-        }
     }
 }
 
@@ -573,59 +720,103 @@ function updatePaceByAveragePace(averagePace) {
 const paceInput = {
     intervalMap: {},
     caretPosition: 0,
-    defaultAllowedKeys: ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'],
+    defaultAllowedKeys: ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
 }
 
 function initPaceInput() {
     const buttonUp = document.getElementById('pace-button-up');
     const buttonDown = document.getElementById('pace-button-down');
-    const averagePace = document.getElementById('average-pace');
+    const averagePaceMin = document.getElementById('average-pace-min');
+    const averagePaceSec = document.getElementById('average-pace-sec');
 
-    handlePaceButtonEvents(paceInput, buttonUp, 1, averagePace);
-    handlePaceButtonEvents(paceInput, buttonDown, -1, averagePace);
+    averagePaceMin.value = 0;
+    averagePaceSec.value = 0;
 
-    HandlePaceKeyInput(paceInput, averagePace);
+    handlePaceButtonEvents(paceInput, buttonUp, 1, averagePaceSec);
+    handlePaceButtonEvents(paceInput, buttonDown, -1, averagePaceSec);
 
-    setTimePaceInput(288);
+    HandlePaceKeyInput(averagePaceMin, 60);
+    HandlePaceKeyInput(averagePaceSec, 1);
+
+    // setTimePaceInput(360);
 }
 
-function HandlePaceKeyInput(paceInput, element) {
-    element.value = element.innerText;
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + 1);
+}
+
+function HandlePaceKeyInput(element, change) {    
     element.addEventListener('keydown', (e) => {
-        const colonIndex = e.currentTarget.innerText.indexOf(':');
-        if (!((e.key <= '9' && e.key >= '0') || paceInput.defaultAllowedKeys.includes(e.key))) {
-            if (e.key === ':') {
-                if (window.getSelection().anchorOffset === colonIndex) {                    
-                    setCaretPosition(element, colonIndex + 1);
-                }
-            } 
-            
-            e.preventDefault();
+        if (!paceInput.defaultAllowedKeys.includes(e.key)) {
+            if (!e.ctrlKey) {
+                e.preventDefault();
+                return;
+            }
         }
 
-                
-        if ((window.getSelection().anchorOffset === colonIndex + 1 && e.key === 'Backspace') ||
-            (window.getSelection().anchorOffset === colonIndex && e.key === 'Delete')) {
+        if (e.key == 'Delete') {
+            let caretPosition = window.getSelection().anchorOffset;
+            setCaretPosition(e.currentTarget, ++caretPosition);
+        }
+
+        if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            onPaceUpdate(change);
+        }
+
+        if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            onPaceUpdate(-change);
+        }
+    })
+    
+    element.addEventListener('paste', (e) => {
+        let paste = e.clipboardData.getData('text');
+        if (isNaN(Number.parseInt(paste))) {
             e.preventDefault();
         }
     })
 
+    element.addEventListener('drop', (e) => {
+        e.preventDefault();
+    })
+
     element.addEventListener('input', (e) => {
-        paceInput.caretPosition = window.getSelection().anchorOffset;
-        const averagePace = convertAveragePaceText(e.currentTarget);
-        
-        if (averagePace.minutes >= 60) {
-            averagePace.minutes = 59;
+        let caretPosition = window.getSelection().anchorOffset;
+        let newValue = 0;
+        if (e.inputType == 'insertFromPaste') {
+            newValue = Number.parseInt(element.innerText);
+            if (newValue > 59) {
+                newValue = 59;
+            }
+
+            element.innerText = newValue.toString();
+            element.value = newValue;
+        } else if (e.data !== null && e.data >= '0' && e.data <= '9') {
+            const data = Number.parseInt(e.data);
+            newValue = 0;
+            if (caretPosition == 1) {
+                newValue = data * 10 + Math.floor(element.value % 10);
+            } else {
+                newValue = Math.floor(element.value / 10) * 10 + data;
+            }
+            
+            element.innerText = newValue.toString();
+            element.value = newValue;
         }
 
-        if (averagePace.seconds >= 60) {
-            averagePace.seconds = 59;
-        }
-
+        const averagePace = getAveragePace();
         const newPace = averagePace.minutes * 60 + averagePace.seconds;
+        totalTimeLastUpdated = false;
 
         updatePaceTime(newPace);
-        setCaretPosition(e.currentTarget, paceInput.caretPosition);
+        setCaretPosition(element, caretPosition);
+        if (caretPosition === 2) {
+            const nextElementId = e.currentTarget.getAttribute('data-next');
+            const nextElement = document.getElementById(nextElementId);
+            
+            nextElement.focus();
+        }
     })
 }
 
@@ -660,10 +851,18 @@ function updateAveragePaceSubscribers(averagePace) {
     updatePaceByAveragePace(averagePace)
 }
 
-function onPaceUpdate(change) {
+function onPaceUpdate(change = 0) {
+    totalTimeLastUpdated = false;
+
     const averagePace = getAveragePace();
     const timeInSeconds = averagePace.minutes * 60 + averagePace.seconds;
-    const newPace = timeInSeconds + change;
+    let newPace = timeInSeconds + change;
+    if (newPace > (12 * 60)) {
+        newPace = 12 * 60;
+    } else if (newPace < (2 * 60)) {
+        newPace = 2 * 60;
+    }
+    
 
     updatePaceTime(newPace);
 }
@@ -674,28 +873,29 @@ function updatePaceTime(newPace) {
 }
 
 function getAveragePace() {
-    const averagePace = document.getElementById('average-pace');
+    const averagePaceMin = document.getElementById('average-pace-min');
+    const averagePaceSec = document.getElementById('average-pace-sec');
 
     return {
-        minutes: averagePace.minutes,
-        seconds: averagePace.seconds,
+        minutes: averagePaceMin.value,
+        seconds: averagePaceSec.value,
     }
 }
 
 function setTimePaceInput(totalTimeInSeconds) {
+    if (totalTimeInSeconds === Infinity || totalTimeInSeconds < 0 || isNaN(totalTimeInSeconds)) {
+        totalTimeInSeconds = 0;
+    }
+
     const time = convertFromSeconds(totalTimeInSeconds);
-    const averagePace = document.getElementById('average-pace');
-    averagePace.minutes = time.minutes;
-    averagePace.seconds = time.seconds;
+    const averagePaceMin = document.getElementById('average-pace-min');
+    const averagePaceSec = document.getElementById('average-pace-sec');
 
-    const result = time.minutes + ':' + padLeft(time.seconds, 2);
-    averagePace.value = result;
-    averagePace.innerText = result;
+    averagePaceMin.value = time.minutes;
+    averagePaceMin.innerText = padLeft(time.minutes, 2)
 
-    // minutesElement.innerText = time.minutes;
-    // minutesElement.value = time.minutes;
-    // secondsElement.innerText = padLeft(time.seconds, 2);
-    // secondsElement.value = time.seconds;
+    averagePaceSec.value = time.seconds;
+    averagePaceSec.innerText = padLeft(time.seconds, 2)
 }
 
 
@@ -704,6 +904,10 @@ function setTimePaceInput(totalTimeInSeconds) {
 //////////////////////////////////////////////////
 function updateAveragePaceByAverageSpeed(averageSpeed) {
     const newAverageTimeInSeconds = (1 / (averageSpeed / 3600));
+    if (newAverageTimeInSeconds < 0 || newAverageTimeInSeconds > 3600) {
+        return;
+    }
+
     setTimePaceInput(newAverageTimeInSeconds);
 }
 
@@ -714,14 +918,10 @@ function updateAveragePaceByTotalTime(totalTime) {
 
     setTimePaceInput(secondsPerKm);
 }
-
-
-
-
 const speedInput = {
     intervalMap: {},
     caretPosition: 0,
-    defaultAllowedKeys: ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'],
+    defaultAllowedKeys: ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab', ',', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
 }
 
 function initSpeedInput() {
@@ -736,32 +936,64 @@ function initSpeedInput() {
     // updateSpeed(getDisctanceInKm(), getTimeInput());
 }
 
-
 function HandleSpeedKeyInput(speedInput, element) {
     element.value = Number.parseFloat(element.innerText.replace(',', '.'));
     element.addEventListener('keydown', (e) => {
-        const commaIndex = e.currentTarget.innerText.indexOf(',');
-        if (!((e.key <= '9' && e.key >= '0') || speedInput.defaultAllowedKeys.includes(e.key))) {
-            if (e.key === '.' || e.key === ',') {
-                if (window.getSelection().anchorOffset === commaIndex) {                    
-                    setCaretPosition(element, commaIndex + 1);
-                }
-            } 
+        if (!speedInput.defaultAllowedKeys.includes(e.key)) {
+            if (!e.ctrlKey) {
+                e.preventDefault();
+                return;
+            }
+        }
 
+        let caretPosition = window.getSelection().anchorOffset;
+        if (e.key == 'Delete' && e.currentTarget.innerText[caretPosition] === ',') {    
+            setCaretPosition(e.currentTarget, ++caretPosition);
             e.preventDefault();
         }
 
-        
-        if ((window.getSelection().anchorOffset === commaIndex + 1 && e.key === 'Backspace') ||
-            (window.getSelection().anchorOffset === commaIndex && e.key === 'Delete')) {
+        if (e.key == 'Backspace' && e.currentTarget.innerText[caretPosition - 1] === ',') {    
+            setCaretPosition(e.currentTarget, --caretPosition);
             e.preventDefault();
         }
+
+        if (e.key == 'ArrowUp') {
+            e.preventDefault();
+            onUpdateSpeed(0.1, element);
+        }
+
+        if (e.key == 'ArrowDown') {
+            e.preventDefault();
+            onUpdateSpeed(-0.1, element);
+        }
+    })
+
+    element.addEventListener('paste', (e) => {
+        let paste = e.clipboardData.getData('text');
+        if (isNaN(Number.parseInt(paste))) {
+            e.preventDefault();
+        }
+    })
+
+    element.addEventListener('drop', (e) => {
+        e.preventDefault();
     })
 
     element.addEventListener('input', (e) => {
         speedInput.caretPosition = window.getSelection().anchorOffset;
         let averageSpeed = Number.parseFloat(e.currentTarget.innerText.replace(',', '.'));
         let roundedAverageSpeed = Math.floor(averageSpeed * 10) / 10;
+        
+        if (isNaN(roundedAverageSpeed)) {
+            roundedAverageSpeed = 0;
+        } else if (roundedAverageSpeed > 3600) {
+            roundedAverageSpeed = 3600;
+        }
+
+        e.currentTarget.innerText = roundedAverageSpeed;
+        element.value = roundedAverageSpeed;        
+        totalTimeLastUpdated = false;
+
         updateSpeedField(e.currentTarget, roundedAverageSpeed);
         updateSpeedSubscribers(roundedAverageSpeed);
         setCaretPosition(e.currentTarget, speedInput.caretPosition);
@@ -780,22 +1012,37 @@ function handleSpeedButtonEvents(speedInput, element, change, speedElement) {
 }
 
 function updateSpeedSubscribers(averageSpeed) {
+    if (averageSpeed < 1) {
+        return;
+    }
+
     updatePaceByAverageSpeed(averageSpeed);
     updateAveragePaceByAverageSpeed(averageSpeed);
 }
 
 
 function onUpdateSpeed(change, speedElement) {
-    const newSpeed = Math.round((speedElement.value + change) * 100) / 100;
+    totalTimeLastUpdated = false;
+    let newSpeed = Math.round((speedElement.value + change) * 100) / 100;
+    if (newSpeed < 5) {
+        newSpeed = 5; 
+    } else if (newSpeed > 30) {
+        newSpeed = 30;
+    }
+
+    
     updateSpeedField(speedElement, newSpeed);
     updateSpeedSubscribers(newSpeed);
 }
 
 
 function updateSpeedField(speedElement, averageSpeed) {
+    if (averageSpeed === Infinity || averageSpeed < 0 || isNaN(averageSpeed)) {
+        averageSpeed = 0;
+    }
     strSpeed = averageSpeed.toFixed(1).replace('.', ',');
 
-    speedElement.value = averageSpeed;
+    speedElement.value = Math.round(averageSpeed * 10) / 10;
     speedElement.innerText = strSpeed;
 }
 
@@ -839,6 +1086,9 @@ function createPaceTable() {
     const distanceInKm = getDisctanceInKm();
 
     const totalSeconds = getTotalTimeInSeconds(timeInput);
+    if (totalSeconds === 0) {
+        return;
+    }
     let secondsPerKm = calculateSecondsPerKm(distanceInKm, totalSeconds);
     const panelMain = $('panelMain');
     const weight = Number.parseInt($('weight').value);
@@ -861,11 +1111,17 @@ function createPaceTable() {
 
         if (d >= distanceInKm) {
             const values = calculateValues(distanceInKm, totalSeconds, weight)    
+            if (negativeSplit.diff) {
+                values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss');
+            }
             appendToBody(tbody, values);
             break;
         }
 
         const values = calculateValues(d, totalSecondsForDistance, weight)
+        if (negativeSplit.diff) {
+            values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss');
+        }
         appendToBody(tbody, values);
         
         if (d === distanceInKm) {
@@ -886,16 +1142,26 @@ function calculateValues(distanceInKm, totalSecondsForDistance, weight) {
         distance = '<b>Halve</b>';
     } else if (distanceInKm === 42.195) {
         distance = '<b>Marathon</b>';
+    } else {
+        distance = distance + ' km';
     }
 
     const pace = calculatePace(totalSecondsForDistance, distanceInKm);
     const paceTime = convertFromSeconds(pace);
 
-    const totalTime = convertFromSeconds(totalSecondsForDistance);
-    const timeString = toString(totalTime, 'h:mm:ss', ':', true);
-    const kcal = calculateKcal(distanceInKm, weight, totalSecondsForDistance);
+    if (pace === Infinity) {
+        return;
+    }
 
-    return [distance, timeString, kcal, toString(paceTime, 'm:ss')];
+    const totalTime = convertFromSeconds(totalSecondsForDistance);
+    const timeString = timeToString(totalTime, 'hh:mm:ss', ':');
+    const kcal = calculateKcal(distanceInKm, weight, pace);
+    let kcalString = '';
+    if (kcal) {
+        kcalString = kcal.toLocaleString('nl-NL') + ' kcal';
+    }
+
+    return [distance, timeString, kcalString, timeToString(paceTime, 'm:ss') + ' / km'];
 }
 
 function getTableHeaders(weight) {
@@ -906,12 +1172,15 @@ function getTableHeaders(weight) {
     return ['Afstand', 'Tijd', 'Energie', 'Tempo'];
 }
 
-function calculateKcal(distanceInKm, weight, secondsPerKm) {
+function calculateKcal(distanceInKm, weight, pace) {
     if (isNaN(weight)) {
         return '';
     }
-
-    return Math.round(distanceInKm * weight * (secondsPerKm / 3600));
+    // gewicht    12 km uur       5 km per uur
+//     // 75 *       12 *            (5 / 60)
+// console.log(document.getElementById('speed').value);
+// console.log(typeof(document.getElementById('speed').value));
+    return Math.round(document.getElementById('speed').value * distanceInKm * weight * (pace / 3600));
 }
 
 function convertPaceToString(totalTimeInSeconds, distanceInKm)
@@ -919,7 +1188,7 @@ function convertPaceToString(totalTimeInSeconds, distanceInKm)
     const pace = calculatePace(totalTimeInSeconds, distanceInKm);
     const paceTime = convertFromSeconds(pace);
 
-    return toString(paceTime, 'm:ss');
+    return timeToString(paceTime, 'm:ss');
 }
 
 /**
