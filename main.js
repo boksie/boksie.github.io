@@ -608,7 +608,7 @@ function initPace() {
     const minutes = document.getElementById('minutes');
     const seconds = document.getElementById('seconds');
 
-    createSelectOptions(hours, 6, 'uur');
+    createSelectOptions(hours, 9, 'uur');
     createSelectOptions(minutes, 60, 'min.');
     createSelectOptions(seconds, 60, 'sec.');
 
@@ -856,7 +856,13 @@ function onPaceUpdate(change = 0) {
 
     const averagePace = getAveragePace();
     const timeInSeconds = averagePace.minutes * 60 + averagePace.seconds;
-    const newPace = timeInSeconds + change;
+    let newPace = timeInSeconds + change;
+    if (newPace > (12 * 60)) {
+        newPace = 12 * 60;
+    } else if (newPace < (2 * 60)) {
+        newPace = 2 * 60;
+    }
+    
 
     updatePaceTime(newPace);
 }
@@ -980,8 +986,8 @@ function HandleSpeedKeyInput(speedInput, element) {
         
         if (isNaN(roundedAverageSpeed)) {
             roundedAverageSpeed = 0;
-        } else if (roundedAverageSpeed > 3600) {
-            roundedAverageSpeed = 3600;
+        } else if (roundedAverageSpeed > 30) {
+            roundedAverageSpeed = 30;
         }
 
         e.currentTarget.innerText = roundedAverageSpeed;
@@ -1017,7 +1023,14 @@ function updateSpeedSubscribers(averageSpeed) {
 
 function onUpdateSpeed(change, speedElement) {
     totalTimeLastUpdated = false;
-    const newSpeed = Math.round((speedElement.value + change) * 100) / 100;
+    let newSpeed = Math.round((speedElement.value + change) * 100) / 100;
+    if (newSpeed < 5) {
+        newSpeed = 5; 
+    } else if (newSpeed > 30) {
+        newSpeed = 30;
+    }
+
+    
     updateSpeedField(speedElement, newSpeed);
     updateSpeedSubscribers(newSpeed);
 }

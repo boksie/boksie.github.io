@@ -22,7 +22,7 @@
         <div class="landing-main">De snelste weg om je hardlooptijden te berekenen. Zo ben je op en top voorbereid op je training of wedstrijd.</div>
         <div class="landing-main-short">De snelste weg om je hardlooptijden te berekenen.</div>
         <div class="row form-landing">
-            <input tabindex="1" class="input-landing" type="text" id="name" placeholder="Voornaam" data-bind="name" data-bind-new="person">
+            <input tabindex="1" class="input-landing" type="text" id="name" placeholder="Jouw naam (optioneel)" data-bind="name" data-bind-new="person">
             <input tabindex="2" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="age" placeholder="Leeftijd" data-bind="age">
             <input tabindex="3" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="weight" placeholder="Gewicht" data-bind="weight" data-target="pace">
             
@@ -220,19 +220,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pace-button-wrapper">
-                            <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">
-                                Personaliseren<span data-display="name#weight#age"><img
-                                        src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
-                            <div tabindex="8" class="button btn-white-panel spa-link" data-target="negative-split">
-                                Negatieve split<span data-display="negative-split-range"><img
-                                        src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span>
+                        
+                            <div class="pace-button-wrapper">
+                                <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">
+                                    Personaliseren<span data-display="name#weight#age"><img
+                                            src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
+                                <div tabindex="8" class="button btn-white-panel spa-link" data-target="negative-split">
+                                    Negatieve split<span data-display="negative-split-range"><img
+                                            src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span>
+                                </div>
                             </div>
+                            <div class="pace-navigation-buttons">
+                                <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span>
+                                </div>
+                                <div tabindex="10" class="button btn-transparent spa-link" data-target="landing">Terug</div>
                         </div>
-
-                        <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span>
-                        </div>
-                        <div tabindex="10" class="button btn-transparent spa-link" data-target="landing">Terug</div>
                     </div>
                 </div>
             </div>
