@@ -1042,7 +1042,7 @@ function updateSpeedField(speedElement, averageSpeed) {
     }
     strSpeed = averageSpeed.toFixed(1).replace('.', ',');
 
-    speedElement.value = averageSpeed;
+    speedElement.value = Math.round(averageSpeed * 10) / 10;
     speedElement.innerText = strSpeed;
 }
 
@@ -1150,7 +1150,7 @@ function calculateValues(distanceInKm, totalSecondsForDistance, weight) {
     const paceTime = convertFromSeconds(pace);
 
     const totalTime = convertFromSeconds(totalSecondsForDistance);
-    const timeString = timeToString(totalTime, 'h:mm:ss', ':', true);
+    const timeString = timeToString(totalTime, 'h:mm:ss', ':');
     const kcal = calculateKcal(distanceInKm, weight, pace);
     let kcalString = '';
     if (kcal) {
@@ -1173,9 +1173,9 @@ function calculateKcal(distanceInKm, weight, pace) {
         return '';
     }
     // gewicht    12 km uur       5 km per uur
-    // 75 *       12 *            (5 / 60)
-console.log(document.getElementById('speed').value);
-console.log(typeof(document.getElementById('speed').value));
+//     // 75 *       12 *            (5 / 60)
+// console.log(document.getElementById('speed').value);
+// console.log(typeof(document.getElementById('speed').value));
     return Math.round(document.getElementById('speed').value * distanceInKm * weight * (pace / 3600));
 }
 

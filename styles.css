@@ -159,6 +159,11 @@ option {
     font-family: 'Montserrat',Verdana,Geneva,sans-serif;
 }
 
+hr {
+    padding: 0;
+    margin: 0;
+}
+
 
 /**** FLEX *****/
 
@@ -644,6 +649,12 @@ body {
     .form-fullscreen-body {
         justify-content: unset;
     }
+
+    .form-row {
+        display: flex;
+        gap: 10px;
+        /* flex-direction: column; */
+    }
 }/**** PANEL *****/
 .panel {
     background-color: #F7F7F7;
@@ -664,7 +675,7 @@ body {
     font-weight: 400;
     font-size: 24px;
     line-height: 29px;
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 
 .panel-title-result {
@@ -688,6 +699,7 @@ body {
 
 
 .panel-detail {
+    gap: 25px;
     display: flex;
     background-color: #AA9A6B;
     color: #F7F7F7;
@@ -705,7 +717,6 @@ body {
 
 .panel-detail-col > * {
     display: block;
-    margin: 10px 0px 0px 0px;
 }
 
 .panel-detail-col:nth-child(-n + 2) {
@@ -725,7 +736,7 @@ body {
 .panel-detail-label {
     font-weight: 400;
     /* font-weight: lighter; */
-    font-size: 10px;
+    font-size: 8px;
     text-transform: uppercase;
     padding: 0;
     margin: 0;
@@ -1024,16 +1035,20 @@ select:focus {
         display: unset;
         align-content: center;
         display: flex;
-        gap: 2%;
+        /* gap: 2%; */
     }
 
     .pace-text-wrapper {
         display: none;
     }
+
+    .range-label {
+        top: -8px;
+    }
     
     .panel-container {
         overflow: scroll;
-        min-height: 600px;
+        min-height: 575px;
         height: 100%;
         width: 100%;
     }
@@ -1042,7 +1057,7 @@ select:focus {
         width: 100%;
         height: 100%;
         padding: 0;
-        border-radius: 15px 15px 0px 0px;
+        border-radius: 0;
         box-shadow: none;
         overflow: scroll;
     }
@@ -1091,7 +1106,7 @@ th:nth-last-child(-n + 2) {
 th {
     text-transform: uppercase;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 12px;
     padding: 5px 2px;
 }
 
@@ -1100,6 +1115,7 @@ tr:nth-last-child(-n + 1) td {
 }
 
 td {
+    font-variant-numeric: tabular-nums;
     text-align: right;
     padding: 3px 7px;
     font-size: 12px;
