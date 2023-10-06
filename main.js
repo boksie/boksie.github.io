@@ -1026,8 +1026,8 @@ function onUpdateSpeed(change, speedElement) {
     let newSpeed = Math.round((speedElement.value + change) * 100) / 100;
     if (newSpeed < 5) {
         newSpeed = 5; 
-    } else if (newSpeed > 30) {
-        newSpeed = 30;
+    } else if (newSpeed > 3600) {
+        newSpeed = 3600;
     }
 
     
