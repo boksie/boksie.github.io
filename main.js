@@ -986,8 +986,8 @@ function HandleSpeedKeyInput(speedInput, element) {
         
         if (isNaN(roundedAverageSpeed)) {
             roundedAverageSpeed = 0;
-        } else if (roundedAverageSpeed > 30) {
-            roundedAverageSpeed = 30;
+        } else if (roundedAverageSpeed > 3600) {
+            roundedAverageSpeed = 3600;
         }
 
         e.currentTarget.innerText = roundedAverageSpeed;
