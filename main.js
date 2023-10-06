@@ -1112,7 +1112,7 @@ function createPaceTable() {
         if (d >= distanceInKm) {
             const values = calculateValues(distanceInKm, totalSeconds, weight)    
             if (negativeSplit.diff) {
-                values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss');
+                values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss') + ' / km';
             }
             appendToBody(tbody, values);
             break;
@@ -1120,7 +1120,7 @@ function createPaceTable() {
 
         const values = calculateValues(d, totalSecondsForDistance, weight)
         if (negativeSplit.diff) {
-            values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss');
+            values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss') + ' / km';
         }
         appendToBody(tbody, values);
         
