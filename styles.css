@@ -722,12 +722,9 @@ body {
     color: #F7F7F7;
     padding: 25px 15px;
     border-radius: 5px;
-    box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25);
+    /* box-shadow: 0.5px 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25); */
 }
 
-.panel-detail-col + .panel-detail-col {
-    margin-left: 30px;
-}
 
 .panel-detail-col {
     position: relative;
