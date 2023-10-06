@@ -475,7 +475,7 @@ function fillWeatherData(json) {
 
      if (weatherJson.id < 800) {
         const background = document.querySelector('.background');
-        background.classList.remove('blue-sky');
+        background.classList.remove('dry');
         background.classList.add('rain');
      }
 }const bodyFacts = [

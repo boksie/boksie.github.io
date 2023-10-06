@@ -364,6 +364,11 @@ body {
     color: #FFFFFF;
 }
 
+.dry {
+    background-image: url("./images/dry.jpeg");
+    color: #FFFFFF;
+}
+
 .rain {
     background-image: url("./images/rain.jpeg");
     color: #F7F7F7;
