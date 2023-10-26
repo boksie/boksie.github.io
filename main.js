@@ -25,7 +25,7 @@ const app = {
         });
     
         initStart();
-        initFactButton();
+        // initFactButton();
         initPace();
         initPaceInput();
         initSpeedInput();
@@ -478,112 +478,6 @@ function fillWeatherData(json) {
         background.classList.remove('dry');
         background.classList.add('rain');
      }
-}class factGroup {
-    icon;
-    label;
-    lines = [];
-
-    constructor(icon, label, lines) {
-        this.icon = icon;
-        this.label = label;
-        this.lines = lines;
-    }
-}
-
-const facts = [
-    new factGroup('&#129504;', 'Bodyfact', [
-        '2,4 miljoen Nederlanders regelmatig hardlopen',
-        'Vrouwen gemiddeld het hardste rennen als ze 29 jaar zijn en mannen 27 jaar',
-        'Hardlopers presteren het best bij een temperatuur rond de 8 graden',
-        'Het snelste tempo ooit gemeten voor een mannelijke sprinter op 100 meter is 9,58 seconden, gevestigd door Usain Bolt in 2009',   
-    ]),
-    new factGroup('&#128293;', 'Energizer', [
-        'je een uur moet hardlopen voor het verbranden van een Quattro formaggi',
-        'het lopen van een marathon tussen de 2500 en 3000 kcal kost',
-        'je lichaam zo’n 60 tot 90 gram koolhydraten per uur opnemen',
-        'Een handige vuistregel is dat je bij een grote inspanning iedere 20-30 minuten een gel kan gebruiken',
-        'Je koolhydraatvoorraad is beperkt en hierop kan je zonder aanvulling ongeveer 45 tot 90 minuten hardlopen',
-    ]),
-    new factGroup('&#129658;', 'Gezondheid', [
-        // 'Hardlopen kan helpen bij het verminderen van stress en het verbeteren van de stemming door de afgifte van endorfines, de zogenaamde gelukshormonen',
-        // 'Hardlopen helpt bij het versterken van je botten. Het is aangetoond dat regelmatig hardlopen de botdichtheid verhoogt en het risico op osteoporose vermindert',
-        'Mensen die meer dan 30 min per dag sporten bereiken een betere en diepere slaap',
-        'Regelmatig hardlopen kan het risico op hartaandoeningen, beroertes en diabetes type 2 verminderen',
-    ]),
-    new factGroup('&#127937;', 'Marathon', [
-            'De oudste marathonloper ooit was 101 jaar en liep een marathon in een tijd van 07:49',
-        'De Marathon in Denemarken is de snelste marathon ter wereld met een gemiddelde finishtijd van 3u51:22',
-        'Je mag 2500 tot 3000 kcal extra eten met een marathon',
-        // 'De eerste georganiseerde marathon vond plaats tijdens de Olympische Spelen van 1896 in Griekenland, gebaseerd op de mythische loopafstand tussen de steden Marathon en Athene',
-        // 'Het wereldrecord voor de snelste marathontijd bij mannen staat op naam van Eliud Kipchoge uit Kenia, met een tijd van 2 uur, 1 minuut en 39 seconden, behaald in Berlijn in 2018',
-        // 'Het wereldrecord voor de snelste marathontijd bij vrouwen staat op naam van Brigid Kosgei uit Kenia, met een tijd van 2 uur, 14 minuten en 4 seconden, behaald in Chicago in 2019',
-        'De eerste officiële vrouwenmarathon vond plaats in 1972 in New York City, waarbij slechts acht vrouwen deelnamen',
-    ]),
-    new factGroup('&#127939;', 'Materiaal', [
-        'Hardloopschoenen gaan gemiddeld 650 - 1000 kilometer mee voordat je ze moet vervangen',
-        'Schoenen hebben ook rust nodig. Het kan wel 48 uur duren voordat je schoenen in hun origineel staat zijn teruggekeerd',
-        'Er elk jaar meer dan een miljard hardloopschoenen worden verkocht',
-    ])
-]
-
-function initFactButton() {
-    updateIconWithRandomFact();
-    
-    button.addEventListener('click', e => {
-        const fact = getRandomFactFromLabel(e.currentTarget.querySelector('.icon').label);
-        e.currentTarget.querySelector('#factsText').innerHTML = fact;
-
-        const iconBig = e.currentTarget.querySelector('.icon-big');
-        const iconWrapper = e.currentTarget.querySelector('.animation-wrapper');
-
-        if (iconBig.classList.contains('hide')) {
-            updateIconWithRandomFact();
-        }
-
-        toggleClass(iconBig, ['hide']);
-        toggleClass(iconWrapper, ['show']);
-        toggleClass(e.currentTarget, ['btn-icon-expanded']);
-    })
-}
-
-function updateIconWithRandomFact() {
-    const randomIndex = getRandomInt(0, facts.length);
-    const button = document.getElementById('button');
-
-    const iconElements = button.getElementsByClassName('icon');
-    for (const iconElement of iconElements) {
-        iconElement.innerHTML = facts[randomIndex].icon;
-        iconElement.label = facts[randomIndex].label;    
-    }
-}
-
-function getRandomFactFromLabel(label) {
-    for (const fact of facts) {
-        if (fact.label === label) {
-            const randomIndex = getRandomInt(0, fact.lines.length);
-            
-            return fact.lines[randomIndex];
-        }
-    }
-
-    return null;
-}
-
-function toggleClass(element, classes) {
-    for (const cls of classes) {
-        if (element.classList.contains(cls)) {
-            element.classList.remove(cls)
-        } else {
-            element.classList.add(cls)
-        }
-    }
-}
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
-    return Math.floor(Math.random() * (max - min) + min);
 }
 function initNegativeSplit() {
 
