@@ -22,7 +22,7 @@
         <div class="landing-main">De snelste weg om je hardlooptijden te berekenen. Zo ben je op en top voorbereid op je training of wedstrijd.</div>
         <div class="landing-main-short">De snelste weg om je hardlooptijden te berekenen.</div>
         <div class="row form-landing">
-            <input tabindex="1" class="input-landing" type="text" id="name" placeholder="Jouw naam (optioneel)" data-bind="name" data-bind-new="person">
+            <input tabindex="1" class="input-landing" type="text" id="name" placeholder="Jouw naam (optioneel)" data-bind="name">
             <input tabindex="2" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="age" placeholder="Leeftijd" data-bind="age">
             <input tabindex="3" onkeydown="allowNumbers(event)" class="input-landing" type="text" id="weight" placeholder="Gewicht" data-bind="weight" data-target="pace">
             
@@ -254,7 +254,6 @@
                             </div>
                         </div>
                         
-                            <div class="pace-button-wrapper">
                                 <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">
                                     Personaliseren<span data-display="name#weight#age"><img
                                             src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
@@ -262,7 +261,7 @@
                                     Negatieve split<span data-display="negative-split-range"><img
                                             src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span>
                                 </div>
-                            </div>
+
                             <div class="pace-navigation-buttons">
                                 <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span>
                                 </div>
@@ -319,11 +318,11 @@
                                 <div class="panel-detail-label">KM</div>
                             </div>
                             <div class="panel-detail-col">
-                                <div class="panel-detail-value" data-resolve="speed">&nbsp;</div>
+                                <div class="panel-detail-value" data-resolve="speed" data-transform>&nbsp;</div>
                                 <div class="panel-detail-label">KM/U</div>
                             </div>
                             <div class="panel-detail-col">
-                                <div class="panel-detail-value" data-resolve="hours:minutes:seconds">&nbsp;</div>
+                                <div class="panel-detail-value" data-resolve="hours:minutes:seconds" data-transform>&nbsp;</div>
                                 <div class="panel-detail-label">Eindtijd</div>
                             </div>
                         </div>
@@ -334,10 +333,12 @@
                 </div>
 
 
-                <hr>
-                <div class="result-buttons">
-                    <div class="button btn-round spa-link" data-target="pace"><img height="20px" src="./icons/Instellingen.svg"></div>
-                    <div class="button btn-round spa-link" data-target="landing"><img height="20px" src="./icons/Sluiten.svg"></div>
+                <div class="pace-navigation-buttons">
+                    <hr>
+                    <div class="result-buttons">
+                        <div class="button btn-round spa-link" data-target="pace"><img height="20px" src="./icons/Instellingen.svg"></div>
+                        <div class="button btn-round spa-link" data-target="landing"><img height="20px" src="./icons/Sluiten.svg"></div>
+                    </div>
                 </div>
             </div>
         </div>

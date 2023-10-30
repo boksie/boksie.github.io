@@ -13,7 +13,21 @@ const app = {
             pg.addEventListener('flip', app.display);
             pg.addEventListener('flip', app.run);
             pg.addEventListener('flip', app.tab);
+            pg.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+            
+                    const currentTabId = pg.querySelector(':focus').getAttribute('tabindex');
+                    let modifier = 1;
+                    if (e.shiftKey) {
+                        modifier = -1;                    
+                    }
+                    focusElement(pg, Number.parseInt(currentTabId) + modifier);
+                }
+            })
         });
+
+        
 
         document.querySelectorAll('.spa-link').forEach((link) => {
             link.addEventListener('click', app.nav);
@@ -94,8 +108,10 @@ const app = {
             previousPageElement.classList.remove('active')
         }
         
-        document.getElementById(currentPage).classList.add('active');
-        document.getElementById(currentPage).dispatchEvent(app.flip);
+        const page = document.getElementById(currentPage);
+        page.classList.add('active');
+        page.dispatchEvent(app.flip);
+        focusElement(page, 0);
 
         app.previousPage = previousPageElement.id;
     },
@@ -130,19 +146,6 @@ const app = {
     tab: (e) => {
         const page = e.target;
         focusElement(page, 0);
-
-        page.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                e.preventDefault();
-        
-                const currentTabId = page.querySelector(':focus').getAttribute('tabindex');
-                let modifier = 1;
-                if (e.shiftKey) {
-                    modifier = -1;                    
-                }
-                focusElement(page, Number.parseInt(currentTabId) + modifier);
-            }
-        })
     },
     escape: () => {
         document.addEventListener('keydown', (e) => {
@@ -221,7 +224,6 @@ function shouldDisplayElement(ids, allTrue = true) {
             } else {
                 displayElement |= (switchResult ? !hasValue : hasValue);
             }
-            
         }
     })
 

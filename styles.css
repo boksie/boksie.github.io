@@ -16,14 +16,14 @@
     display: flex;
     align-items: center;
     margin: 10px;
-    padding: 15px;
+    padding: 17.5px;
     background-color: #309546;
     border-radius: 10px;
     color: #FFFFFF;
     text-align: center;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
 }
 
@@ -61,7 +61,6 @@
 }
 
 .btn-white-panel {
-    margin-top: 10px;
     padding: 15px;
     background-color: #FFFFFF;
     border-radius: 25px 0px 25px 0px;
@@ -69,10 +68,12 @@
     font-size: 16px;
     display: flex;
     position: relative;
+    border: transparent 1px solid;
 }
 
 .btn-white-panel:hover {
-    font-weight: bolder;
+    /* font-weight: bolder; */
+    color: #309546;
 }
 
 .btn-white-panel:focus {
@@ -96,7 +97,7 @@
     align-items: center;
     text-align: center;
     display: inline-block;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.15);
 }
 
 .btn-round > img {
@@ -122,7 +123,8 @@
 }
 
 .btn-transparent:hover {
-    font-weight: bolder;
+    /* font-weight: bolder; */
+    color: #309546;
 }
 
 .btn-transparent:focus {
@@ -225,8 +227,17 @@ input:focus {
 } */
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    font-style: italic;
+    /* font-style: italic; */
+    color: #A7A7A7;
 }
+
+select {
+    color: #000;
+}
+
+/* select option:hover {
+    border: #309546;
+} */
 
 /**** RANGE *****/
 
@@ -284,6 +295,7 @@ input[type=range]::-moz-range-thumb {
 .result-buttons {
     display: flex;
     justify-content: space-between;
+    background-color: #F7F7F7F7;
 }
 /* 
 .button * {
@@ -492,7 +504,7 @@ body {
     box-shadow: inset 0 0 0 2px #309546;
     background-image: url('./icons/Gedaan.svg');
     background-repeat: no-repeat;
-    background-position: right 10px bottom 50%;
+    background-position: right 18px bottom 50%;
 }
 
 .form-landing {
@@ -746,10 +758,6 @@ body {
     flex-direction: row;
 }
 
-.form-row + .form-row {
-    margin-top: 10px;
-}
-
 .form-fullscreen {
     width: 100%;
     text-align: center;
@@ -762,6 +770,7 @@ body {
 }
 
 .form-fullscreen-body {
+    gap: 10px;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -775,8 +784,7 @@ body {
 }
 
 .form-fullscreen-question {
-    margin: 20px;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 28px;
 }
 
@@ -820,6 +828,8 @@ body {
 
 .panel-body {
     padding: 10px 0px;
+    height: calc(100% - 190px);
+    /* max-height: 600px; */
 }
 
 .panel-title {
@@ -853,7 +863,7 @@ body {
 .panel-detail {
     gap: 25px;
     display: flex;
-    background-color: #AA9A6B;
+    background-color: #957930;
     color: #F7F7F7;
     padding: 25px 15px;
     border-radius: 5px;
@@ -870,6 +880,10 @@ body {
 
 .panel-detail-col > * {
     display: block;
+}
+
+.panel-detail-col:nth-child(2) {
+    padding-left: 20px;
 }
 
 .panel-detail-col:nth-child(-n + 2) {
@@ -963,6 +977,11 @@ body {
     margin-right: 5px;
     white-space: nowrap;
     overflow: hidden;
+    border: 1px solid transparent;
+}
+
+.time-wrapper:hover {
+    border: #309546 1px solid;
 }
 
 /* .time-wrapper > * > span {
@@ -987,7 +1006,7 @@ body {
 
 .time-buttons-right {
     position: absolute;
-    right: 5px;
+    right: 10px;
     height: 100%;
     background-color: white;
 }
@@ -1045,9 +1064,10 @@ body {
     position: relative;
     display: flex;
     border: 2px solid #309546;
-    border-radius: 2px;
-    height: 76px;
+    height: 70px;
     background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 3px;
 }
 
 .form-input-button input {
@@ -1115,16 +1135,22 @@ select:focus {
     width: 100%;
     background-image: url('./icons/arrow_down.svg');
     background-repeat: no-repeat;
-    background-position: right 5% bottom 50%;
+    background-position: right 10% bottom 50%;
     background-size: 15px;
     /* margin-right: 25px; */
     padding: 15px 0px 15px 10px;
     /* transition: transform 1s; */
+    border: transparent 1px solid;
 }
 
 .select-wrapper select:focus {
+    border: #309546 1px solid;
     outline: none;
     background-image: url('./icons/arrow_up.svg');
+}
+
+.select-wrapper select:hover {
+    border: #309546 1px solid;
 }
 
 
@@ -1167,15 +1193,17 @@ select:focus {
     text-align: center;
 }
 
+.panel-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 .panel-form .btn-green {
     font-size: 16px;
     box-shadow: none;
 }
 
-.pace-button-wrapper {
-    margin-top: 20px;
-}
 
 @media (max-width: 500px) {
     .header {
@@ -1224,9 +1252,15 @@ select:focus {
         overflow: scroll;
     }
 
-
     .panel-body {
-        padding: 20px;
+        padding: 40px 20px;
+    }
+
+    
+    .panel-form {
+        justify-content: space-between;
+        max-height: 400px;
+        height: calc(100% - 40px);
     }
 
     .pace-navigation-buttons {
