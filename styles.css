@@ -15,7 +15,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    margin: 10px;
+    /* margin: 10px; */
     padding: 17.5px;
     background-color: #309546;
     border-radius: 10px;
@@ -129,6 +129,22 @@
 
 .btn-transparent:focus {
     outline: 1px solid #309546;
+}
+
+@media (max-width: 500px) {
+    .btn-green {
+        padding: 20px;
+    }
+
+    .btn-round {
+        margin: 15px 0px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .btn-round > img {
+        height: 25px;
+    }
 }
 
 
@@ -581,6 +597,7 @@ input:-webkit-autofill:focus {
     .input-landing {
         width: 85%;
         margin: 3px;
+        padding: 20px 0px 20px 15px;
     }
 
     #name {
@@ -803,7 +820,9 @@ input:-webkit-autofill:focus {
 @media (max-width: 500px) {
     .form-fullscreen {
         height: 100%;
+        overflow: hidden;
     }
+
     .form-fullscreen-body {
         display: flex;
         flex-direction: column;
@@ -843,7 +862,7 @@ input:-webkit-autofill:focus {
     font-weight: 400;
     font-size: 24px;
     line-height: 29px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 
 .panel-title-result {
@@ -869,7 +888,7 @@ input:-webkit-autofill:focus {
 .panel-detail {
     gap: 25px;
     display: flex;
-    background-color: #957930;
+    background: linear-gradient(#957930, #aa9a6b);
     color: #F7F7F7;
     padding: 25px 15px;
     border-radius: 5px;
@@ -1101,6 +1120,7 @@ input:-webkit-autofill:focus {
 
 .form-input-button .input-valid + svg {
     color: #309546;
+    animation: pulse 2s infinite;
 }
 
 .form-column {
@@ -1259,29 +1279,49 @@ select:focus {
     }
 
     .panel-body {
-        padding: 40px 20px;
+        padding: 40px 20px 0 20px;
     }
 
     
     .panel-form {
         justify-content: space-between;
-        max-height: 400px;
+        max-height: 250px;
         height: calc(100% - 40px);
     }
 
-    .pace-navigation-buttons {
+    .navigation-buttons {
         position: absolute;
-        display: block;
+        display: flex;
         flex-direction: column;
         bottom: 0;
         left: 0;
         right: 0;
+        padding: 0px 25px;
+    }
+
+    .pace-navigation-buttons {
+        gap: 15px;
     }
 
     .form-fullscreen-body {
         width: 85%;
         margin: auto;
     }
+}
+
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.1);
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }
 /**** TABLE *****/
 

@@ -66,6 +66,11 @@ const app = {
                     element.innerHTML = value;
                 }
             }
+
+            if (element.hasAttribute('data-transform')) {
+                const functionName = element.getAttribute('data-transform');
+                element.innerHTML = window[functionName](element.innerHTML);
+            }
         })
     },
     display: (e) => {
@@ -247,6 +252,22 @@ function focusElement(page, id) {
     }
 }
 
+function formatNumber(number) {
+    return Number.parseFloat(number).toFixed(1);
+}
+
+function formatTime(timeString) {
+    console.log(timeString);
+    const timeArray = timeString.split(':');
+    const time = {
+        hours: Number.parseInt(timeArray[0]),
+        minutes: Number.parseInt(timeArray[1]),
+        seconds: Number.parseInt(timeArray[2]),
+    }
+    
+    return timeToString(time, 'h:mm:ss', ':', true);
+}
+
 
 // const test = document.querySelector('#pace');
 
@@ -368,6 +389,7 @@ function timeToString(time, format, seperator = ':', ignoreZero = false) {
                     break;
                 case 's':
                     if (ignoreZero === true && time.hours === 0 && time.minutes === 0 && time.seconds === 0) {
+                        result.push(0);
                         continue;
                     }
 
@@ -1173,9 +1195,14 @@ function createPaceTable() {
 
         if (d >= distanceInKm) {
             const values = calculateValues(distanceInKm, totalSeconds, weight)    
+            if (values === undefined) {
+                break;
+            }
+            
             if (negativeSplit.diff) {
                 values[3] = timeToString(convertFromSeconds(secondsPerKm), 'm:ss') + ' / km';
             }
+
             appendToBody(tbody, values);
             break;
         }

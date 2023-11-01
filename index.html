@@ -166,7 +166,7 @@
             <div class="panel">
                 <div class="panel-body">
                     <div class="panel-title">
-                        Mijn tempo
+                        Instellen
                     </div>
                     <div class="panel-form">
                         <div class="form-row">
@@ -237,7 +237,6 @@
                             <div class="form-column">
                                 <label>Tijd</label>
                                 <div class="row" id="time-input-fields">
-
                                     <div class="select-wrapper">
                                         <select tabindex="4" onchange="onTimeUpdate()" id="hours">
                                         </select>
@@ -254,6 +253,9 @@
                             </div>
                         </div>
                         
+                                
+
+                            <div class="pace-navigation-buttons navigation-buttons">
                                 <div tabindex="7" class="button btn-white-panel spa-link" data-target="name-form">
                                     Personaliseren<span data-display="name#weight#age"><img
                                             src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span></div>
@@ -262,7 +264,6 @@
                                             src="./icons/Gedaan.svg"></span><span #else class="plus-icon"></span>
                                 </div>
 
-                            <div class="pace-navigation-buttons">
                                 <div tabindex="9" class="button btn-green spa-link" data-target="result"><span>Lets go</span>
                                 </div>
                                 <div tabindex="10" class="button btn-transparent spa-link" data-target="landing">Terug</div>
@@ -318,11 +319,11 @@
                                 <div class="panel-detail-label">KM</div>
                             </div>
                             <div class="panel-detail-col">
-                                <div class="panel-detail-value" data-resolve="speed" data-transform>&nbsp;</div>
+                                <div class="panel-detail-value" data-resolve="speed" data-transform="formatNumber">&nbsp;</div>
                                 <div class="panel-detail-label">KM/U</div>
                             </div>
                             <div class="panel-detail-col">
-                                <div class="panel-detail-value" data-resolve="hours:minutes:seconds" data-transform>&nbsp;</div>
+                                <div class="panel-detail-value" data-resolve="hours:minutes:seconds" data-transform="formatTime">&nbsp;</div>
                                 <div class="panel-detail-label">Eindtijd</div>
                             </div>
                         </div>
@@ -333,10 +334,10 @@
                 </div>
 
 
-                <div class="pace-navigation-buttons">
+                <div class="navigation-buttons">
                     <hr>
                     <div class="result-buttons">
-                        <div class="button btn-round spa-link" data-target="pace"><img height="20px" src="./icons/Instellingen.svg"></div>
+                        <div class="button btn-round spa-link" data-target="pace"><img height="20px" src="./icons/arrow_back.svg"></div>
                         <div class="button btn-round spa-link" data-target="landing"><img height="20px" src="./icons/Sluiten.svg"></div>
                     </div>
                 </div>
