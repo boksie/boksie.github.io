@@ -1,9 +1,9 @@
 const $ = (query) => document.getElementById(query);
-window.onhashchange = (e) => {
-    if (history.state) {
-        navigateToPage(history.state.currentPage);
-    }
-}
+// window.onhashchange = (e) => {
+//     if (history.state) {
+//         navigateToPage(history.state.currentPage);
+//     }
+// }
 
 const app = {
     pages: [],
@@ -184,7 +184,7 @@ function navigateToPage(currentPage) {
     focusElement(page, 0);
 
     app.previousPage = previousPageElement.id;
-    history.pushState({currentPage}, '', `#${currentPage}`);
+    // history.pushState({currentPage}, '', `#${currentPage}`);
 }
 
 /**
