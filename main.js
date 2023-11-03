@@ -1,4 +1,9 @@
 const $ = (query) => document.getElementById(query);
+window.onhashchange = (e) => {
+    if (history.state) {
+        navigateToPage(history.state.currentPage);
+    }
+}
 
 const app = {
     pages: [],
@@ -103,22 +108,7 @@ const app = {
         e.preventDefault();
 
         let currentPage = e.currentTarget.getAttribute('data-target');
-        const previousPageElement = document.querySelector('.active');
-
-        if (currentPage === 'previous') {
-            currentPage = app.previousPage;
-        }
-
-        if (previousPageElement.classList.contains('active')) {
-            previousPageElement.classList.remove('active')
-        }
-        
-        const page = document.getElementById(currentPage);
-        page.classList.add('active');
-        page.dispatchEvent(app.flip);
-        focusElement(page, 0);
-
-        app.previousPage = previousPageElement.id;
+        navigateToPage(currentPage);
     },
     clear: (e) => {
         $('negative-split-input').value = '';
@@ -175,6 +165,26 @@ const app = {
             }
         })
     }
+}
+
+function navigateToPage(currentPage) {
+    const previousPageElement = document.querySelector('.active');
+
+    if (currentPage === 'previous') {
+        currentPage = app.previousPage;
+    }
+
+    if (previousPageElement.classList.contains('active')) {
+        previousPageElement.classList.remove('active')
+    }
+    
+    const page = document.getElementById(currentPage);
+    page.classList.add('active');
+    page.dispatchEvent(app.flip);
+    focusElement(page, 0);
+
+    app.previousPage = previousPageElement.id;
+    history.pushState({currentPage}, '', `#${currentPage}`);
 }
 
 /**
